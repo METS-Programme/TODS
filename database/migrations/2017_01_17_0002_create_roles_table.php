@@ -12,14 +12,14 @@ class CreateRolesTable extends Migration
      */
     public function up()
     {
-        Schema::create('roles', function (Blueprint $table) {
+        Schema::create('roles_2', function (Blueprint $table) {
             $table->increments('role_id');
             $table->string('name');
             $table->string('status');
             $table->unsignedInteger('user_id');
             $table->timestamps();
         });
-        Schema::table('roles', function ($table) {
+        Schema::table('roles_2', function ($table) {
             $table->foreign('user_id')->references('user_id')->on('user')->onDelete('cascade');
         });
     }
@@ -31,6 +31,6 @@ class CreateRolesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('roles');
+        Schema::drop('roles_2');
     }
 }

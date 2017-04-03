@@ -18,11 +18,11 @@
                 <!-- /.box-header -->
                 <div class="box-body">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label>Implementing Partner</label>
-                                <select class="form-control select2" style="width: 100%;">
-                                    <option>IDI - KCC</option>
+                                <select class="form-control" id="ip" style="width: 100%;">
+                                    <option value="IDI - KCC">IDI - KCC</option>
                                     <option>IDI - BHP</option>
                                     <option>IDI - WNP</option>
                                     <option>Mildmay</option>
@@ -36,14 +36,14 @@
                             <!-- /.form-group -->
                         </div>
                         <!-- /.col -->
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label>Order Number</label>
                                 <input type="text" class="form-control" placeholder="Enter ...">
                             </div>
                             </div>
                             <!-- /.form-group -->
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                             <div class="form-group">
                                 <div class="form-group">
                                     <label>Date picked:</label>
@@ -55,6 +55,7 @@
                                         <input type="text" class="form-control pull-right" id="datepicker">
                                     </div>
                                     <!-- /.input group -->
+
                                 </div>
                             </div>
                             <!-- /.form-group -->
@@ -92,7 +93,7 @@
                                         <tr>
                                             <td>1.</td>
                                             <td><div class="form-group">
-                                                    <select class="form-control select2" data-placeholder="Select a tool" style="width: 100%;">
+                                                    <select class="form-control" data-placeholder="Select a tool" style="width: 100%;">
                                                         <option>Comprehensive ART Transfer Form</option>
                                                         <option>HMIS Form 031 - Out Patient Register</option>
                                                         <option>HMIS Form 033b - Health Unit Weekly Epidemological Surveillance Report</option>
@@ -121,7 +122,7 @@
                                         <tr>
                                             <td>2.</td>
                                             <td><div class="form-group">
-                                                    <select class="form-control select2" data-placeholder="Select a tool" style="width: 100%;">
+                                                    <select class="form-control " data-placeholder="Select a tool" style="width: 100%;">
                                                         <option>Comprehensive ART Transfer Form</option>
                                                         <option>HMIS Form 031 - Out Patient Register</option>
                                                         <option>HMIS Form 033b - Health Unit Weekly Epidemological Surveillance Report</option>
@@ -151,7 +152,7 @@
                                         <tr>
                                             <td>3.</td>
                                             <td><div class="form-group">
-                                                    <select class="form-control select2" data-placeholder="Select a tool" style="width: 100%;">
+                                                    <select class="form-control " data-placeholder="Select a tool" style="width: 100%;">
                                                         <option>Comprehensive ART Transfer Form</option>
                                                         <option>HMIS Form 031 - Out Patient Register</option>
                                                         <option>HMIS Form 033b - Health Unit Weekly Epidemological Surveillance Report</option>
@@ -181,7 +182,7 @@
                                         <tr>
                                             <td>4.</td>
                                             <td><div class="form-group">
-                                                    <select class="form-control select2" data-placeholder="Select a tool" style="width: 100%;">
+                                                    <select class="form-control " data-placeholder="Select a tool" style="width: 100%;">
                                                         <option>Comprehensive ART Transfer Form</option>
                                                         <option>HMIS Form 031 - Out Patient Register</option>
                                                         <option>HMIS Form 033b - Health Unit Weekly Epidemological Surveillance Report</option>

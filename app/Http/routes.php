@@ -10,14 +10,17 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+Route::auth();
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index');
 
-Route::get('registration', function () {
+//Route::get('/', function () {
+//    return view('/layouts/home');
+//});
+
+/*Route::get('registration', function () {
     return view('layouts.registration');
-});
+});*/
 
 Route::get('print-orders', function () {
     return view('layouts.print orders');
@@ -39,17 +42,67 @@ Route::get('tool-pickup', function () {
     return view('layouts.tool pickup');
 });
 
-Route::get('tool-registration', function () {
-    return view('layouts.tool registration');
-});
+//Route::get('tool-registration', function () {
+//    return view('layouts.tool registration');
+//});
 
-Route::get('home', function () {
-    return view('layouts.master');
-});
+//Route::get( "tool-registration", 'ToolsRegistrationController@tool-registration');
+//Route::post("store", 'ToolsregistrationController@store');
 
-Route::get('registered-user', function(){
+//Route::get('home', function () {
+//    return view('layouts.home');
+//});
+
+/*Route::get('registered-user', function(){
     $user = app\register::find(1);
     print_r($user);
-});
+});*/
 
-Route::get('test', 'TestController@index');
+//Real Routes now
+
+//Route::get('test', 'TestController@index');
+
+Route::get('testing', 'testing123@test');
+
+Route::get('tool-registration', 'ToolsregController@registorTool');
+
+Route::get('tool-pickup', 'ToolsregController@pickupTool');
+
+//User Routes
+Route::get('people', 'UserRegController@showUsers');
+Route::get('people/create', 'UserRegController@createUser');
+Route::get('people/{user_id}', 'UserRegController@userDetails');
+Route::post('people', 'UserRegController@store');
+
+//Import Export Allocations from/to Excell into DB
+Route::get('allocations', 'AllocationsController@index');
+//Route::get('allocations', 'AllocationsController@importExport');
+Route::get('allocations/{type}', 'AllocationsController@downloadExcel');
+Route::post('allocations', 'AllocationsController@importExcel');
+Route::get('available-tools', 'AvailableToolsController@index');
+Route::get('/', 'AvailableToolsController@homeBlock');
+
+
+//IP Routes
+/*Route::get('ips', 'ImplementingPartnerController@showIps');
+Route::get('ips/create', 'ImplementingPartnerController@createIp');
+Route::get('ips/{user_id}', 'ImplementingPartnerController@ipDetails');
+Route::post('ips', 'ImplementingPartnerController@store');
+Route::get('ips/{id}/edit', 'ImplementingPartnerController@edit');*/
+Route::resource('ips', 'ImplementingPartnerController');
+Route::resource('tools-picked', 'toolsController');
+Route::resource('tools', 'ToolsCRUDController');
+Route::resource('deliveryCRUD', 'DeliveryCRUDController');
+Route::resource('printorderCRUD', 'PrintOrderCRUDController');
+Route::resource('ipdashboard', 'IpDashboardController');
+
+
+
+//Route::resource('allocations', 'AllocationsController');
+
+
+
+
+
+
+

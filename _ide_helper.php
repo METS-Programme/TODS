@@ -6229,7 +6229,7 @@ namespace {
          * @return \Psr\Log\LoggerInterface 
          * @static 
          */
-        public static function useSyslog($name = 'laravel', $level = 'debug'){
+        public static function useSyslog($name = 'laravel_notknown', $level = 'debug'){
             return \Illuminate\Log\Writer::useSyslog($name, $level);
         }
         
