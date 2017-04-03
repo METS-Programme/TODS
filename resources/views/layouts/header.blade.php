@@ -104,34 +104,52 @@
                     </ul>
                 </li>
                 <!-- User Account Menu -->
-                <li class="dropdown user user-menu">
-                    <!-- Menu Toggle Button -->
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <!-- The user image in the navbar-->
-                        <img src="{{ asset("/bower_components/AdminLTE/dist/img/avatar.png") }}" class="user-image" alt="User Image"/>
-                        <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                        <span class="hidden-xs">Admin</span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <!-- The user image in the menu -->
-                        <li class="user-header">
-                            <img src="{{ asset("/bower_components/AdminLTE/dist/img/avatar.png") }}" class="img-circle" alt="User Image" />
-                            <p>
-                                Admin - METS Staff
-                                <small>Full Access</small>
-                            </p>
+                {{--<li class="dropdown user user-menu">--}}
+                    {{--<!-- Menu Toggle Button -->--}}
+                    {{--<a href="#" class="dropdown-toggle" data-toggle="dropdown">--}}
+                        {{--<!-- The user image in the navbar-->--}}
+                        {{--<img src="{{ asset("/bower_components/AdminLTE/dist/img/avatar.png") }}" class="user-image" alt="User Image"/>--}}
+                        {{--<!-- hidden-xs hides the username on small devices so only the image appears. -->--}}
+                        {{--<span class="hidden-xs">Admin</span>--}}
+                    {{--</a>--}}
+                    {{--<ul class="dropdown-menu">--}}
+                        {{--<!-- The user image in the menu -->--}}
+                        {{--<li class="user-header">--}}
+                            {{--<img src="{{ asset("/bower_components/AdminLTE/dist/img/avatar.png") }}" class="img-circle" alt="User Image" />--}}
+                            {{--<p>--}}
+                                {{--Admin - METS Staff--}}
+                                {{--<small>Full Access</small>--}}
+                            {{--</p>--}}
+                        {{--</li>--}}
+                        {{--<!-- Menu Footer-->--}}
+                        {{--<li class="user-footer">--}}
+                            {{--<div class="pull-left">--}}
+                                {{--<a href="#" class="btn btn-default btn-flat">Profile</a>--}}
+                            {{--</div>--}}
+                            {{--<div class="pull-right">--}}
+                                {{--<a href="/" class="btn btn-default btn-flat">Sign out</a>--}}
+                            {{--</div>--}}
+                        {{--</li>--}}
+                    {{--</ul>--}}
+                {{--</li>--}}
+
+                <ul class="nav navbar-nav navbar-right user user-menu">
+                    <!-- Authentication Links -->
+                    @if (Auth::guest())
+                        <li><a href="{{ url('/login') }}">Login</a></li>
+                        <li><a href="{{ url('/register') }}">Register</a></li>
+                    @else
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                {{ Auth::user()->name }} <span class="caret"></span>
+                            </a>
+
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                            </ul>
                         </li>
-                        <!-- Menu Footer-->
-                        <li class="user-footer">
-                            <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat">Profile</a>
-                            </div>
-                            <div class="pull-right">
-                                <a href="/" class="btn btn-default btn-flat">Sign out</a>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
+                    @endif
+                </ul>
             </ul>
         </div>
     </nav>
