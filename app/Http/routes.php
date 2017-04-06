@@ -95,7 +95,7 @@ Route::resource('tools', 'ToolsCRUDController');
 Route::resource('deliveryCRUD', 'DeliveryCRUDController');
 Route::resource('printorderCRUD', 'PrintOrderCRUDController');
 Route::resource('ipdashboard', 'IpDashboardController');
-
+Route::resource('facility', 'facility');
 
 
 //Route::resource('allocations', 'AllocationsController');
