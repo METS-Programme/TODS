@@ -42,9 +42,9 @@ Route::get('tool-pickup', function () {
     return view('layouts.tool pickup');
 });
 
-//Route::get('tool-registration', function () {
-//    return view('layouts.tool registration');
-//});
+Route::get('reports', function () {
+    return view('layouts.reports.report');
+});
 
 //Route::get( "tool-registration", 'ToolsRegistrationController@tool-registration');
 //Route::post("store", 'ToolsregistrationController@store');
@@ -67,6 +67,7 @@ Route::get('testing', 'testing123@test');
 Route::get('tool-registration', 'ToolsregController@registorTool');
 
 Route::get('tool-pickup', 'ToolsregController@pickupTool');
+Route::get('people/{user_id}', 'UserRegController@userDetails');
 
 //User Routes
 Route::get('people', 'UserRegController@showUsers');
@@ -79,8 +80,10 @@ Route::get('allocations', 'AllocationsController@index');
 //Route::get('allocations', 'AllocationsController@importExport');
 Route::get('allocations/{type}', 'AllocationsController@downloadExcel');
 Route::post('allocations', 'AllocationsController@importExcel');
-Route::get('available-tools', 'AvailableToolsController@index');
+//Route::get('available-tools', 'AvailableToolsController@index');
 Route::get('/', 'AvailableToolsController@homeBlock');
+
+//Route::get('delivery/{printorder_id}', 'PrintOrderCRUDController@showdeliverynote');
 
 
 //IP Routes

@@ -16,13 +16,10 @@ class implementing_partner extends Model
         'funding_agency_id',
         'regions',
         'districts',
-        'health_facilities',
         'vision',
         'location',
         'about',
         'image'
-
-
     ];
     /*public function scopePublished($query){
         $query->where('created_at', '<=' Carbon::now());
@@ -32,6 +29,9 @@ class implementing_partner extends Model
     public function fundingAgency(){
 
         return $this->belongsTo('App\funding_agency');
+    }
+    public function Facility(){
+        $this->hasMany('Facility', 'ip_id');
     }
 
 

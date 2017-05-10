@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\allocation;
 use App\implementing_partner;
 use Illuminate\Http\Request;
+use App\FacilityLevel;
 use App\Item;
 use Excel;
 
@@ -22,12 +23,13 @@ class AllocationsController extends Controller
     public function index()
     {
         $toolsAllocation = allocation::all();
+        //$level = facilityLevel::pluck();
 
 //        foreach ($toolsAllocation as $toolA){
 //            $ips[] = implementing_partner::find($toolA->ip_id);
 //        }
 
-        return view('layouts.allocations', compact('toolsAllocation'));
+        return view('layouts.allocations', compact('toolsAllocation', 'level'));
     }
 
     public function showTools()
@@ -76,7 +78,7 @@ class AllocationsController extends Controller
 
                     } catch (\Exception $e) {
                         //Item::rollback();
-                        return back()->with('error', 'Duplicate Entry In the Database, Check the file and try again.');
+                        return back()->with('error', 'Duplicate entry in the database, please check the file and try again.');
                     }
                 }
             }

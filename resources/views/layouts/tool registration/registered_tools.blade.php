@@ -2,19 +2,17 @@
 @section('content')
     <div class="row">
         <div class="col-lg-12 margin-tb">
-            <div class="pull-left">
-                <h2>Tools Registered</h2>
-            </div>
-            <div class="pull-right">
+            <div class="tools">
                 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#newTool">
                     Register new tool
+                    <span class="glyphicon glyphicon-plus"></span>
                 </button>
             </div>
         </div>
     </div>
     <!-- div for register new tool pop up dialog-->
     <div class="modal fade" id="newTool" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
+        <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
@@ -23,41 +21,43 @@
                 <div class="modal-body">
                     {!! Form::open(array('route' => 'tools.store','method'=>'POST')) !!}
 
-                <div class="form-group">
-                    <strong>Tool Name:</strong>
-                    {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
+                <div class="form-group row">
+                    <div class="col-md-3"><strong>Tool Name:</strong></div>
+                    <div class="col-md-9">{!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}</div>
                 </div>
 
 
 
-                <div class="form-group">
-                    <strong>Tool Code:</strong>
-                    {!! Form::text('code', null, array('placeholder' => 'Code','class' => 'form-control')) !!}
+                <div class="form-group row">
+                    <div class="col-md-3"><strong>Tool Code:</strong></div>
+                    <div class="col-md-9">{!! Form::text('code', null, array('placeholder' => 'Code','class' => 'form-control')) !!}</div>
                 </div>
 
 
-                <div class="form-group">
-                    <strong>Specification:</strong>
-                    {!! Form::text('specification', null, array('placeholder' => 'Specification','class' => 'form-control')) !!}
+                <div class="form-group row">
+                    <div class="col-md-3"><strong>Specification:</strong></div>
+                    <div class="col-md-9">{!! Form::text('specification', null, array('placeholder' => 'Specification','class' => 'form-control')) !!}</div>
                 </div>
 
-                    <div class="form-group">
-                        <strong>Service area:</strong>
-                        {{Form::select('servicearea_id', $serviceareafortool, null)}}
+                    <div class="form-group row">
+                        <div class="col-md-3"><strong>Service area:</strong></div>
+                        <div class="col-md-9">{{Form::select('servicearea_id', $serviceareafortool, null)}}</div>
                     </div>
 
-                    <div class="form-group">
-                        <strong>Package Id:</strong>
-                        {{ Form::select('package_id', $packagefortool, null)}}
+                    <div class="form-group row">
+                        <div class="col-md-3"><strong>Package Id:</strong></div>
+                        <div class="col-md-9">{{ Form::select('package_id', $packagefortool, null)}}</div>
                     </div>
 
                 <div class="form-group">
                     <strong>Description:</strong>
                     {!! Form::textarea('description', null, array('placeholder' => 'Description','class' => 'form-control')) !!}
                 </div>
-
-
-                {{ Form::submit('Register tool', array('class' => 'btn btn-info btn-block')) }}
+                 <div class="row">
+                     <div class="col-md-3"></div>
+                     <div class="col-md-6">{{ Form::submit('Register tool', array('class' => 'btn btn-info btn-block')) }}</div>
+                     <div class="col-md-3"></div>
+                </div>
                     {{ Form::close() }}
                 </div>
             </div><!-- /.modal-content -->
@@ -69,24 +69,35 @@
             <p>{{ $message }}</p>
         </div>
     @endif
-    <table class="table table-striped" border="3">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Registered Tools</h3>
+        </div>
+
+        <div class="box-body no-padding">
+    <table class="table table-bordered table-striped">
+        <thead>
         <tr >
             <th>Id</th>
             <th>Name</th>
             <th>Code</th>
             <th>Specification</th>
             <th>Description</th>
-            <th>Service_area</th>
+            <th>Stock Status</th>
             <th width="280px">Action</th>
         </tr>
+        </thead>
+        <tbody>
+        @php($i = 1)
         @foreach ($tools as $tool)
             <tr>
-                <td>{{ $tool->tools_id }}</td>
+                <td>{{ $i }}</td>
                 <td>{{ $tool->name}}</td>
                 <td>{{ $tool->code}}</td>
                 <td>{{ $tool->specification}}</td>
                 <td>{{ $tool->description}}</td>
-                <td>{{ $tool->servicearea_id}}</td>
+                <td>{{ $tool->stock_status}}</td>
+                @php($i++)
                 <td>
                     <!-- show tool -->
                     <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#showTool">
@@ -217,8 +228,11 @@
 
                 </td>
             </tr>
-        @endforeach
-    </table>
+           @endforeach
+          </tbody>
+         </table>
+        </div>
+    </div>
     {{--{!! $tools->render() !!}--}}
     <!-- jQuery 2.2.3 -->
     <script src="/bower_components/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>

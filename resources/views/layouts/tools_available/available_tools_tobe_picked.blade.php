@@ -44,7 +44,7 @@
         {{--List Registered Implementing partners--}}
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">Available Tools to be pick by IPs</h3>
+                <h3 class="box-title">Implementing Partner List</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body no-padding">

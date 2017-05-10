@@ -14,4 +14,8 @@ class FacilityLevel extends Model
         'description',
         'allocation_id'
         ];
+
+    public function facility(){
+        $this->belongsTo('Facility');
+    }
 }

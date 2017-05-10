@@ -36,15 +36,13 @@
     <div class="form-group">
         <label>Supported Number of:</label>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <input placeholder="Regions" class="form-control" name="regions" type="number">
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <input placeholder="Districts" class="form-control" name="districts" type="number">
             </div>
-            <div class="col-md-4">
-                <input placeholder="Health Facilities" class="form-control" name="health_facilities" type="number">
-            </div>
+
         </div>
     </div>
     <div class="form-group">

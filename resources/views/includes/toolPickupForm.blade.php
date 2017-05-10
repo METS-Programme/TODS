@@ -29,13 +29,28 @@
                             {{--<input type="text" class="form-control pull-right" id="datepicker">--}}
                         </div>
                         <!-- /.input group -->
-
                     </div>
                 </div>
                 <!-- /.form-group -->
-
             </div>
             <!-- /.col -->
+        </div>
+        <div class="row">
+            <!-- /.col -->
+            <div class="col-md-4">
+                <div class="form-group">
+                    {!! Form::label('pickedBy', 'Picked By' ) !!}
+                    {!! Form::text('pickedBy', '') !!}
+                    {{--<input type="text" class="form-control" placeholder="Enter ...">--}}
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    {!! Form::label('givenBy', 'Given By' ) !!}
+                    {!! Form::text('givenBy', '') !!}
+                    {{--<input type="text" class="form-control" placeholder="Enter ...">--}}
+                </div>
+            </div>
         </div>
         <!-- /.row -->
     </div>

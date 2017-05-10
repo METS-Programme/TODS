@@ -53,37 +53,31 @@
                 <div class="modal-body">
                     {!! Form::open(array('route' => 'facility.store','method'=>'POST')) !!}
 
-                    <div class="form-group">
-                        <strong>Health Facility Name:</strong>
-                        {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
+                    <div class="form-group row">
+                        <div class="col-md-4"><strong>Health Facility Name:</strong></div>
+                        <div class="col-md-8">{!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}</div>
                     </div>
-
-
-
-                    <div class="form-group">
-                        <strong>Health Facility Code:</strong>
-                        {!! Form::text('code', null, array('placeholder' => 'Code','class' => 'form-control')) !!}
+                    <div class="form-group row">
+                        <div class="col-md-4"><strong>Health Facility Code:</strong></div>
+                        <div class="col-md-8">{!! Form::text('code', null, array('placeholder' => 'Code','class' => 'form-control')) !!}</div>
                     </div>
-
-
-                    <div class="form-group">
-                        <strong>Facility Level:</strong>
-                        {{ Form::select('facilitylevel_id', $levelforfacility, null)}}
+                    <div class="form-group row">
+                        <div class="col-md-4"><strong>Facility Level:</strong></div>
+                        <div class="col-md-8">{{ Form::select('facilitylevel_id', $levelforfacility, null)}}</div>
                     </div>
-
-                    <div class="form-group">
-                        <strong>Implementing Partner:</strong>
-
-                        {{ Form::select('ip_id', $implementingpartnerforfacility, null)}}
+                    <div class="form-group row">
+                        <div class="col-md-4"><strong>Implementing Partner:</strong></div>
+                        <div class="col-md-8">{{ Form::select('ip_id', $implementingpartnerforfacility, null)}}</div>
                     </div>
-
-                    <div class="form-group">
-                        <strong>Subcounty:</strong>
-                        {{Form::select('subcounty_id', $subcountyforfacility, null)}}
+                    <div class="form-group row">
+                        <div class="col-md-4"><strong>Subcounty:</strong></div>
+                        <div class="col-md-8">{{Form::select('subcounty_id', $subcountyforfacility, null)}}</div>
                     </div>
-
-
-                    {{ Form::submit('Register facility', array('class' => 'btn btn-info btn-block')) }}
+                    <div class="orm-group row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6">{{ Form::submit('Register facility', array('class' => 'btn btn-info btn-block')) }}</div>
+                        <div class="col-md-3"></div>
+                    </div>
                     {{ Form::close() }}
                 </div>
             </div><!-- /.modal-content -->
@@ -110,12 +104,18 @@
             <th>Subcounty</th>
             <th width="280px">Action</th>
         </tr>
+        @php($i = 1)
         @foreach ($facilities as $healthfacility)
             <tr>
-                <td>{{ $healthfacility->healthfacility_id }}</td>
-                <td>{{ $healthfacility->name}}</td>
+                <td>{{ $i }}</td>
+                <td>{{ $hfName = $healthfacility->name}}</td>
                 <td>{{ $healthfacility->code}}</td>
-                <td>{{ $healthfacility->facilitylevel_id}}</td>
+                @if($healthfacility->facilitylevel_id == 1)<td>{{'Clinic'}}</td>
+                @elseif($healthfacility->facilitylevel_id == 2)<td>{{'HCII'}}</td>
+                @elseif($healthfacility->facilitylevel_id == 3)<td>{{'HCIII'}}</td>
+                @elseif($healthfacility->facilitylevel_id == 4)<td>{{'HCIV'}}</td>
+                @elseif($healthfacility->facilitylevel_id == 5)<td>{{'HOSPITAL'}}</td>
+                @endif
                 <td>{{ $healthfacility->ip_id}}</td>
                 <td>{{ $healthfacility->subcounty_id}}</td>
             <td>
@@ -199,8 +199,6 @@
                                         {!! Form::text('name', $healthfacility->name, array('placeholder' => 'Name','class' => 'form-control')) !!}
                                     </div>
 
-
-
                                     <div class="form-group">
                                         <strong>Health Facility Code:</strong>
                                         {!! Form::text('code', $healthfacility->code, array('placeholder' => 'Code','class' => 'form-control')) !!}
@@ -233,14 +231,25 @@
 
 
                     <!--edit tool ends-->
+                <script>
+                    function ConfirmDelete()
+                    {
+                        var x = confirm("Are you sure you want to delete?");
+                        if (x)
+                            return true;
+                        else
+                            return false;
+                    }
+                </script>
 
                     <!-- delete tool begins -->
-                    {!! Form::open(['method' => 'DELETE','route' => ['facility.destroy', $healthfacility->healthfacility_id],'style'=>'display:inline']) !!}
+                    {!! Form::open(['method' => 'DELETE','route' => ['facility.destroy', $healthfacility->healthfacility_id], 'onsubmit' => 'return ConfirmDelete()', 'style'=>'display:inline']) !!}
                     {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
                     {!! Form::close() !!}
 
                 </td>
             </tr>
+          @php($i++)
         @endforeach
     </table>
         </div>

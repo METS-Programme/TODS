@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\delivery;
-use App\print_order;
 use Illuminate\Http\Request;
-
+use App\Tool;
+use App\print_order;
+use App\print_order_details;
 use App\Http\Requests;
-
+use DB;
+//app('App\Http\Controllers\PrintOrderCRUDController')->show();
 //use App\deliveries;
 
 
@@ -26,12 +28,17 @@ class DeliveryCRUDController extends Controller
     public function index(Request $request)
     {
         $ordernumber=delivery::all();
-//        foreach ($ordernumbers as $ordernumber){
-//            $ordernumber[$ordernumber->delivery_id]=$ordernumber->lpo_number;
-//        }
+        //Get the tools
+        $toolnames=Tool::all();
+        foreach ($toolnames as $codeandname){
+            $toolname[$codeandname->tools_id]=$codeandname->code.' '.$codeandname->name;
+        }
+        $printorders= print_order::orderBy('printorder_id','desc')->pluck('lpo_number', 'lpo_number');
+
+
         $delivery=delivery::orderBy('delivery_id','DESC')->paginate(5);
-        return view('layouts.deliveries.deliveries',compact('delivery', 'ordernumber'))
-            ->with('i',($request->input('page',1)-1)*5);
+        return view('layouts.deliveries.deliveries',compact('delivery', 'ordernumber','toolname','printorders'));
+//            ->with('i',($request->input('page',1)-1)*5);
     }
 
     /**
@@ -53,12 +60,66 @@ class DeliveryCRUDController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'printing_agency'=>'required',
+            'lpo_number'=>'required',
             'date_delivered'=>'required',
             'delivered_by'=>'required',
             'received_by'=>'required',
         ]);
-        delivery::create($request->all());
+
+        $input = $request->all();
+        $total_tools_delivered = 0;
+        foreach ($input['quantity_delivered'] as $total){
+            $total_tools_delivered+=$total;
+        }
+        $delivery_id = DB::table('delivery')->insertGetId(
+            [
+                'lpo_number' => $input['lpo_number'],
+                'date_delivered' => $input['date_delivered'],
+                'delivered_by' => $input['delivered_by'],
+                'received_by' => $input['received_by'],
+                'printingorder_id' => $input['printingorder_id'],
+                'comment' => $input['comment'],
+                'total_tools_delivered' => $total_tools_delivered
+            ]
+        );
+
+        $tools = $input['tools_id'];
+        $quantities = $input['quantity_delivered'];
+        $deliveryDetails = array();
+        foreach ($tools as $key => $tool_id){
+            $value = $quantities[$key];
+            $deliveryDetails[] = array('lpo_number'=> $input['lpo_number'],
+                                        'quantity'=>$value,
+                                        'tools_id' => $tool_id,
+                                        'delivery_id'=>$delivery_id,
+                                         );
+            if (!empty($value)) {
+                    $stockDelivered[] = array(
+                        'delivery_status' => $value,
+                        'tools_id' => $tool_id
+                    );
+            }
+            continue;
+
+        }
+        /**
+         * Insert Into Tools DElivert Table the Delivery Details
+         */
+        DB::table('tools_delivered')->insert($deliveryDetails);
+
+        /**
+         * Update Tools Table increment stock_status
+         */
+        foreach ($stockDelivered as $stock){
+//            if (isset($stock['delivery_status'])) {
+                DB::table('tools')
+                    ->where('tools_id', $stock['tools_id'])
+                    ->increment('stock_status', $stock['delivery_status']);
+//            }
+//            continue;
+        }
+
+
         return redirect()->route('deliveryCRUD.index')
             ->with('success','deliverer registered successfully');
     }
@@ -69,10 +130,25 @@ class DeliveryCRUDController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+//    public function show($delivery_id)
+//    {
+//        $delivery=delivery::find($delivery_id);
+//        return view('layouts.deliveries.deliverydetails',compact('delivery'));
+//    }
+
+
     public function show($delivery_id)
     {
-        $delivery=delivery::find($delivery_id);
-        return view('layouts.deliveries.deliverydetails',compact('delivery'));
+        $delivery = delivery::find($delivery_id);
+       // $deliveryDetails = tools_delivered::where('delivery_id',$delivery_id)->get()->toArray();
+
+        $deliveryDetail = DB::table('tools_delivered')->distinct()->select('lpo_number', 'delivery_id', 'name',
+            'quantity')
+            ->join('tools', 'tools.tools_id', '=', 'tools_delivered.tools_id')
+            ->where('delivery_id', '=', $delivery_id)
+            ->get();
+
+        return view('layouts.deliveries.deliverydetails', compact('delivery','deliveryDetail'));
     }
 
     /**

@@ -39,9 +39,9 @@ class facility extends Controller
             $level[] = FacilityLevel::find($facilitylevel->facilitylevel_id);
         }
 
-        $facilities=\App\Facility::orderBy('healthfacility_id', 'DESC')->paginate(5);
+        $facilities=\App\Facility::orderBy('healthfacility_id', 'DESC')->paginate(20);
         return view('layouts.facility registration.facilitiesRegistered', compact('facilities', 'implementingpartnerforfacility', 'subcountyforfacility', 'levelforfacility'))
-            ->with('i',($request->input('page',1) -1) * 5);
+            ->with('i',($request->input('page',1) -1) * 20);
     }
 
     /**
@@ -70,8 +70,12 @@ class facility extends Controller
             'facilitylevel_id' => 'required',
         ]);
 
+        $input = $request->all();
+        $healthfacility_id =\App\Facility::create($input)->healthfacility_id; //create a facility and get the most recent saved facility ID
 
-        \App\Facility::create($request->all());
+        $input['health_facility_id'] = $healthfacility_id;
+        \App\h_facility_implementing_partner::create($input); //Update the HFC-IP Mapping table
+
         return redirect()->route('facility.index')
             ->with('success', 'Facility registered successfully');
     }

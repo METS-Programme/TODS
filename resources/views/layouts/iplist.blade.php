@@ -71,20 +71,20 @@
                     </thead>
                     <tbody>
                     @php($i = 1)
-                    @foreach($ips as $ip)
+                    @foreach($ipz as $ip)
                         <tr>
                             <td>{{$i}}</td>
                             <td>
-                                <a class="user-block" href="{{route('ips.show',$ip['ip_id'])}}">
-                                    <img class="img-circle img-bordered-sm" src="{{'/images/'.$ip['image'] }}" alt="">
-                                    <span class="username">{{$ip['name']}}</span>
+                                <a class="user-block" href="{{route('ips.show',$ip->ip_id)}}">
+                                    <img class="img-circle img-bordered-sm" src="{{'/images/'.$ip->image }}" alt="">
+                                    <span class="username">{{$ip->name}}</span>
                             </a>
                             </td>
-                        <td>{{$ip['comprehensive_partner']}}</td>
+                        <td>{{$ip->comprehensive_partner}}</td>
                             <td>
-                                {{$ip['funding_agency']['short_name']}}
+                                {{$ip->faName}}
                             </td>
-                            <td>{{$ip['created_at']}}</td>
+                            <td>{{$ip->ipCreatedDate}}</td>
                             <td colspan="2">
                                 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
                                         data-backdrop="static" data-target="#myModal">
@@ -95,7 +95,7 @@
                                     <span class="glyphicon glyphicon-trash"></span>
                                 </a>
                                 {{--{{ route('deliveryCRUD.show',$delivery->delivery_id) }}--}}
-                                <a href="{{route('ips.show',$ip['ip_id'])}}" class="btn btn-default btn-sm">View Details
+                                <a href="{{route('ips.show',$ip->ip_id)}}" class="btn btn-default btn-sm">View Details
                                     <span class="glyphicon glyphicon-eye-open"></span>
                                 </a>
                             </td>

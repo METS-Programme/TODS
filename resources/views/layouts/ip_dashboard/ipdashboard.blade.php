@@ -17,12 +17,14 @@
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="/bower_components/AdminLTE/dist/css/skins/_all-skins.min.css">
+  <link rel="stylesheet" href="/css/buttons.dataTables.min.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
   <![endif]-->
 </head>
 @extends('layouts.master')
@@ -64,7 +66,7 @@
                   <b>Districts</b> <a class="pull-right">{{$ips->districts}}</a>
                 </li>
                 <li class="list-group-item">
-                  <b>Health Facilities</b> <a class="pull-right">{{$ips->health_facilities}}</a>
+                  <b>Health Facilities</b> <a class="pull-right">{{$totalFacilities}}</a>
                 </li>
                 <li class="list-group-item">
                   @if($ips->funding_agency_id ==1) <b>Funded by</b> <a class="pull-right">CDC</a>
@@ -111,227 +113,223 @@
         <div class="col-md-9">
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
-              <li class="active"><a href="#home" data-toggle="tab">Home</a></li>
-              <li><a href="#timeline" data-toggle="tab">Allocations</a></li>
-              <li><a href="#settings" data-toggle="tab">Pickup</a></li>
+              <li class="active"><a href="#facilities" data-toggle="tab">Facilities</a></li>
+              <li><a href="#allocation" data-toggle="tab">Facility Allocations</a></li>
+              <li><a href="#home" data-toggle="tab">Partner Allocations</a></li>
+              <li><a href="#pickups" data-toggle="tab">Pickup</a></li>
             </ul>
             <div class="tab-content">
-              <div class="active tab-pane" id="home">
-                <!-- Post -->
-                <div class="post">
-                  <div class="user-block">
-                    <img class="img-circle img-bordered-sm" src="/bower_components/AdminLTE/dist/img/user1-128x128.jpg" alt="user image">
-                        <span class="username">
-                          <a href="#">Jonathan Burke Jr.</a>
-                          <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
-                        </span>
-                    <span class="description">Shared publicly - 7:30 PM today</span>
-                  </div>
-                  <!-- /.user-block -->
-                  <p>
-                    Lorem ipsum represents a long-held tradition for designers,
-                    typographers and the like. Some people hate it and argue for
-                    its demise, but others ignore the hate as they create awesome
-                    tools to help create filler text for everyone from bacon lovers
-                    to Charlie Sheen fans.
-                  </p>
-                  <ul class="list-inline">
-                    <li><a href="#" class="link-black text-sm"><i class="fa fa-share margin-r-5"></i> Share</a></li>
-                    <li><a href="#" class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5"></i> Like</a>
-                    </li>
-                    <li class="pull-right">
-                      <a href="#" class="link-black text-sm"><i class="fa fa-comments-o margin-r-5"></i> Comments
-                        (5)</a></li>
-                  </ul>
 
-                  <input class="form-control input-sm" type="text" placeholder="Type a comment">
+              <!-- /.tab-pane FACILITIES SUPPORTED -->
+              <div class="active tab-pane" id="facilities">
+                <div class="box">
+                  <div class="box-header">
+                    <h3 class="box-title">HEALTH FACILITIES SUPPORTED BY {{$ips->name}}</h3>
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body no-padding">
+                    @if(!Empty($healthFacilities))
+
+                      <table id="example2" class="table table-bordered table-striped">
+                        {{--@include('layouts.ip_dashboard.ipAllocation')--}}
+                        <thead>
+                        <tr>
+                          <th style="width: 10px">#</th>
+                          <th>Name</th>
+                          <th>Code</th>
+                          <th>Facility Level</th>
+                          <th>Sub-county</th>
+                          <th>Status</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @php($i = 1)
+                        @foreach($healthFacilities as $facility)
+                            <tr>
+                              <td>{{$i}}</td>
+                              <td>{{$facility->facilityName}}</td>
+                              <td>{{$facility->code}}</td>
+                              <td>{{$facility->levelName}}</td>
+                              <td>{{$facility->subcountyName}}</td>
+                              @if($i == 1 || $i == 3)<td><p class="alert-danger">No Tools Delivered</p></td>
+                              @else<td><p class="alert-success">Tools Delivered</p></td>
+                              @endif
+                            </tr>
+                            @php($i++)
+                        @endforeach
+
+                        <tr style="font-weight: bold"> <td>TOTAL</td><td>{{$totalFacilities}}</td><td></td><td></td><td></td><td></td></tr>
+                        </tbody>
+                      </table>
+                    @else
+                      <div class="alert-danger">
+                        <strong>No Facilities Found supported by {{$ips->name}},
+                          <a href="{{url('facility')}}" style="color:greenyellow; text-decoration:underline "> ADD Facilities</a>
+                        </strong>
+                      </div>
+                    @endif
+                  </div>
                 </div>
-                <!-- /.post -->
 
-                <!-- Post -->
-                <div class="post clearfix">
-                  <div class="user-block">
-                    <img class="img-circle img-bordered-sm" src="/bower_components/AdminLTE/dist/img/user7-128x128.jpg" alt="User Image">
-                        <span class="username">
-                          <a href="#">Sarah Ross</a>
-                          <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
-                        </span>
-                    <span class="description">Sent you a message - 3 days ago</span>
+              </div>
+              <!-- /.tab-pane ALLOCATION -->
+              <div class="tab-pane" id="allocation">
+                <div class="box">
+                  <div class="box-header">
+                    <h3 class="box-title">FACILITY ALLOCATION FOR {{$ips->name}}</h3>
                   </div>
-                  <!-- /.user-block -->
-                  <p>
-                    Lorem ipsum represents a long-held tradition for designers,
-                    typographers and the like. Some people hate it and argue for
-                    its demise, but others ignore the hate as they create awesome
-                    tools to help create filler text for everyone from bacon lovers
-                    to Charlie Sheen fans.
-                  </p>
+                  <!-- /.box-header -->
+                  <div class="box-body no-padding">
+                      <table id="example1" class="table table-bordered table-striped">
+                        {{--@include('layouts.ip_dashboard.ipAllocation')--}}
+                        <thead>
+                        <tr>
+                          <th style="width: 10px">#</th>
+                          <th>HMIS Tool</th>
+                          <th>Facility Name</th>
+                          <th>Facility Level</th>
+                          <th>Quantity Allocated</th>
+                        </tr>
+                        </thead>
+                        <tbody>
 
-                  <form class="form-horizontal">
-                    <div class="form-group margin-bottom-none">
-                      <div class="col-sm-9">
-                        <input class="form-control input-sm" placeholder="Response">
-                      </div>
-                      <div class="col-sm-3">
-                        <button type="submit" class="btn btn-danger pull-right btn-block btn-sm">Send</button>
-                      </div>
-                    </div>
-                  </form>
+                        @php($i=1)
+                      @foreach($array as $arr)
+                        {{--@php(print_r($arr['facilityName']."===>".$arr['toolName']."(".$arr['quantity'].")"))--}}
+                          <tr>
+                            <td>{{$i}}</td>
+                            <td>{{$arr['toolName']}}</td>
+                            <td>{{$arr['facilityName']}}</td>
+                            <td>{{$arr['facilityLevel']}}</td>
+                            <td>{{$arr['quantity']}}</td>
+                          </tr>
+                        @php($i++)
+                      @endforeach
+
+                      {{--@php($all_data = [])--}}
+                      {{--@php($tool_qty = 0)--}}
+                      {{--@for($index = 0; $index < count($allocation); $index++)--}}
+                        {{--@php($array = $allocation[$index])--}}
+                        {{--@foreach($array as $arr)--}}
+                          {{--@php($v= get_object_vars($arr))--}}
+                          {{--@php(print_r($v))--}}
+                        {{--@endforeach--}}
+                      {{--@endfor--}}
+                      {{--@foreach($allocation as $allocationData)--}}
+                        {{--@php(print_r($allocationData))--}}
+                      {{--@endforeach--}}
+
+                      {{--<table id="example1" class="table table-bordered table-striped">--}}
+                      {{--@include('layouts.ip_dashboard.ipAllocation')--}}
+                      {{--<thead>--}}
+                      {{--<tr>--}}
+                        {{--<th style="width: 10px">#</th>--}}
+                        {{--<th>Date</th>--}}
+                        {{--<th>Tool</th>--}}
+                        {{--<th>Facility Name</th>--}}
+                        {{--<th>Level</th>--}}
+                        {{--<th>Quantity</th>--}}
+                        {{--<th>Total Allocated</th>--}}
+                        {{--<th>Allocated By</th>--}}
+                      {{--</tr>--}}
+                      {{--</thead>--}}
+                      {{--<tr>--}}
+                      {{--@php($toolsPerTool = []) <!-- Create Empty array to hold total TOOL for each Facility Level-->--}}
+                      {{--@php($i = 1)--}}
+                      {{--@php($totalAllocation = 0)--}}
+                       {{--@foreach($allocation as $allocationData)--}}
+                       {{--@foreach($array as $allocate)--}}
+                          {{--@foreach($allocationData as $allocate)--}}
+                            {{--@php($toolsPerTool[$allocate->toolName][] = $totalToolPerLevel)--}}
+                            {{--@php(print_r($toolsPerTool))--}}
+                              {{--@php($total = 0)--}}
+                              {{--@php($index=0)--}}
+                              {{--@foreach($toolsPerTool as $tool)--}}
+                                {{--@php($total += $tool)--}}
+                              {{--@endforeach--}}
+
+
+                              {{--<tr>--}}
+                                {{--<td>{{$i}}</td>--}}
+                                {{--<td>{{$allocate->date_allocated}}</td>--}}
+                                {{--<td>{{$allocate->toolName}}</td>--}}
+                                {{--<td>{{$allocate->facilityName}}</td>--}}
+                                {{--<td>{{$allocate->facilityLevel}}</td>--}}
+                                {{--<td>{{$allocate->quantity}}</td>--}}
+                                {{--@foreach($noFacilityLevel as $levels)--}}
+                                  {{--<!-- Get Total Number of each tool to be given per facility Level-->--}}
+                                  {{--@if($levels->facilitylevel_id == $allocate->levelId)--}}
+                                    {{--<td>{{ $totalToolPerLevel = ($levels->facilityLevel_count * $allocate->quantity) }}</td>--}}
+                                  {{--@endif--}}
+                                {{--@endforeach--}}
+                                {{--<td>{{$allocate->allocated_by}}</td>--}}
+                                {{--<!--Create an Array total Number to be received by an IP of Each tool  -->--}}
+
+                              {{--</tr>--}}
+
+                        {{--@php($i++)--}}
+                        {{--@php($totalAllocation+=$allocate->quantity)--}}
+                       {{--@endforeach--}}
+                      {{--@endforeach--}}
+                      {{--<tr style="font-weight: bold"> <td>TOTAL</td><td></td><td></td><td></td><td>{{$totalAllocation}}</td><td></td><td></td></tr>--}}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-                <!-- /.post -->
 
-
-                <!-- /.post -->
               </div>
-              <!-- /.tab-pane -->
-              <div class="tab-pane" id="timeline">
-                <!-- The timeline -->
-                <ul class="timeline timeline-inverse">
-                  <!-- timeline time label -->
-                  <li class="time-label">
-                        <span class="bg-red">
-                          10 Feb. 2014
-                        </span>
-                  </li>
-                  <!-- /.timeline-label -->
-                  <!-- timeline item -->
-                  <li>
-                    <i class="fa fa-envelope bg-blue"></i>
+              <!-- /.tab-pane PICKUP-->
 
-                    <div class="timeline-item">
-                      <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
+              <div class="tab-pane" id="pickups">
 
-                      <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
 
-                      <div class="timeline-body">
-                        Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-                        weebly ning heekya handango imeem plugg dopplr jibjab, movity
-                        jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-                        quora plaxo ideeli hulu weebly balihoo...
-                      </div>
-                      <div class="timeline-footer">
-                        <a class="btn btn-primary btn-xs">Read more</a>
-                        <a class="btn btn-danger btn-xs">Delete</a>
-                      </div>
-                    </div>
-                  </li>
-                  <!-- END timeline item -->
-                  <!-- timeline item -->
-                  <li>
-                    <i class="fa fa-user bg-aqua"></i>
+                <p>PICKUP CONTENT HERE</p>
 
-                    <div class="timeline-item">
-                      <span class="time"><i class="fa fa-clock-o"></i> 5 mins ago</span>
 
-                      <h3 class="timeline-header no-border"><a href="#">Sarah Young</a> accepted your friend request
-                      </h3>
-                    </div>
-                  </li>
-                  <!-- END timeline item -->
-                  <!-- timeline item -->
-                  <li>
-                    <i class="fa fa-comments bg-yellow"></i>
-
-                    <div class="timeline-item">
-                      <span class="time"><i class="fa fa-clock-o"></i> 27 mins ago</span>
-
-                      <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
-
-                      <div class="timeline-body">
-                        Take me to your leader!
-                        Switzerland is small and neutral!
-                        We are more like Germany, ambitious and misunderstood!
-                      </div>
-                      <div class="timeline-footer">
-                        <a class="btn btn-warning btn-flat btn-xs">View comment</a>
-                      </div>
-                    </div>
-                  </li>
-                  <!-- END timeline item -->
-                  <!-- timeline time label -->
-                  <li class="time-label">
-                        <span class="bg-green">
-                          3 Jan. 2014
-                        </span>
-                  </li>
-                  <!-- /.timeline-label -->
-                  <!-- timeline item -->
-                  <li>
-                    <i class="fa fa-camera bg-purple"></i>
-
-                    <div class="timeline-item">
-                      <span class="time"><i class="fa fa-clock-o"></i> 2 days ago</span>
-
-                      <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
-
-                      <div class="timeline-body">
-                        <img src="http://placehold.it/150x100" alt="..." class="margin">
-                        <img src="http://placehold.it/150x100" alt="..." class="margin">
-                        <img src="http://placehold.it/150x100" alt="..." class="margin">
-                        <img src="http://placehold.it/150x100" alt="..." class="margin">
-                      </div>
-                    </div>
-                  </li>
-                  <!-- END timeline item -->
-                  <li>
-                    <i class="fa fa-clock-o bg-gray"></i>
-                  </li>
-                </ul>
               </div>
-              <!-- /.tab-pane -->
+              <!-- /.tab-pane HOME -->
+              <div class="tab-pane" id="home">
+                <div class="box">
+                  <div class="box-header">
+                    <h3 class="box-title">PARTNER ALLOCATION ( {{$ips->name}} )</h3>
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body no-padding">
+                    <table id="example3" class="table table-bordered table-striped">
+                      {{--@include('layouts.ip_dashboard.ipAllocation')--}}
+                      <thead>
+                      <tr>
+                        <th style="width: 10px">#</th>
+                        <th>HMIS Tools</th>
+                        <th>Quantity Allocated</th>
+                        <th>Pack Size</th>
+                        <th>Packs</th>
+                        <th>Pieces</th>
+                      </tr>
+                      </thead>
+                      <tbody>
 
-              <div class="tab-pane" id="settings">
-                <form class="form-horizontal">
-                  <div class="form-group">
-                    <label for="inputName" class="col-sm-2 control-label">Name</label>
+                      @php($i=1)
+                      @foreach($all_allocation as $key=>$value)
+                        @php($toolName = explode("|",$key)[1])
 
-                    <div class="col-sm-10">
-                      <input type="email" class="form-control" id="inputName" placeholder="Name">
-                    </div>
+                        <tr>
+                          <td>{{$i}}</td>
+                          <td>{{$toolName}}</td>
+                          <td>{{$value}}</td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                        @php($i++)
+                      @endforeach
+                      </tbody>
+                    </table>
                   </div>
-                  <div class="form-group">
-                    <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+                </div>
 
-                    <div class="col-sm-10">
-                      <input type="email" class="form-control" id="inputEmail" placeholder="Email">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputName" class="col-sm-2 control-label">Name</label>
 
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputName" placeholder="Name">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputExperience" class="col-sm-2 control-label">Experience</label>
-
-                    <div class="col-sm-10">
-                      <textarea class="form-control" id="inputExperience" placeholder="Experience"></textarea>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputSkills" class="col-sm-2 control-label">Skills</label>
-
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputSkills" placeholder="Skills">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                      <div class="checkbox">
-                        <label>
-                          <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                      <button type="submit" class="btn btn-danger">Submit</button>
-                    </div>
-                  </div>
-                </form>
               </div>
               <!-- /.tab-pane -->
             </div>
@@ -346,202 +344,16 @@
     </section>
 
 
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Create the tabs -->
-    <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-      <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-      <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-      <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
-    </ul>
-    <!-- Tab panes -->
-    <div class="tab-content">
-      <!-- Home tab content -->
-      <div class="tab-pane" id="control-sidebar-home-tab">
-        <h3 class="control-sidebar-heading">Recent Activity</h3>
-        <ul class="control-sidebar-menu">
-          <li>
-            <a href="javascript:void(0)">
-              <i class="menu-icon fa fa-birthday-cake bg-red"></i>
 
-              <div class="menu-info">
-                <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
-
-                <p>Will be 23 on April 24th</p>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="javascript:void(0)">
-              <i class="menu-icon fa fa-user bg-yellow"></i>
-
-              <div class="menu-info">
-                <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
-
-                <p>New phone +1(800)555-1234</p>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="javascript:void(0)">
-              <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
-
-              <div class="menu-info">
-                <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
-
-                <p>nora@example.com</p>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="javascript:void(0)">
-              <i class="menu-icon fa fa-file-code-o bg-green"></i>
-
-              <div class="menu-info">
-                <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
-
-                <p>Execution time 5 seconds</p>
-              </div>
-            </a>
-          </li>
-        </ul>
-        <!-- /.control-sidebar-menu -->
-
-        <h3 class="control-sidebar-heading">Tasks Progress</h3>
-        <ul class="control-sidebar-menu">
-          <li>
-            <a href="javascript:void(0)">
-              <h4 class="control-sidebar-subheading">
-                Custom Template Design
-                <span class="label label-danger pull-right">70%</span>
-              </h4>
-
-              <div class="progress progress-xxs">
-                <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="javascript:void(0)">
-              <h4 class="control-sidebar-subheading">
-                Update Resume
-                <span class="label label-success pull-right">95%</span>
-              </h4>
-
-              <div class="progress progress-xxs">
-                <div class="progress-bar progress-bar-success" style="width: 95%"></div>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="javascript:void(0)">
-              <h4 class="control-sidebar-subheading">
-                Laravel Integration
-                <span class="label label-warning pull-right">50%</span>
-              </h4>
-
-              <div class="progress progress-xxs">
-                <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="javascript:void(0)">
-              <h4 class="control-sidebar-subheading">
-                Back End Framework
-                <span class="label label-primary pull-right">68%</span>
-              </h4>
-
-              <div class="progress progress-xxs">
-                <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
-              </div>
-            </a>
-          </li>
-        </ul>
-        <!-- /.control-sidebar-menu -->
-
-      </div>
-      <!-- /.tab-pane -->
-      <!-- Stats tab content -->
-      <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
-      <!-- /.tab-pane -->
-      <!-- Settings tab content -->
-      <div class="tab-pane" id="control-sidebar-settings-tab">
-        <form method="post">
-          <h3 class="control-sidebar-heading">General Settings</h3>
-
-          <div class="form-group">
-            <label class="control-sidebar-subheading">
-              Report panel usage
-              <input type="checkbox" class="pull-right" checked>
-            </label>
-
-            <p>
-              Some information about this general settings option
-            </p>
-          </div>
-          <!-- /.form-group -->
-
-          <div class="form-group">
-            <label class="control-sidebar-subheading">
-              Allow mail redirect
-              <input type="checkbox" class="pull-right" checked>
-            </label>
-
-            <p>
-              Other sets of options are available
-            </p>
-          </div>
-          <!-- /.form-group -->
-
-          <div class="form-group">
-            <label class="control-sidebar-subheading">
-              Expose author name in posts
-              <input type="checkbox" class="pull-right" checked>
-            </label>
-
-            <p>
-              Allow the user to show his name in blog posts
-            </p>
-          </div>
-          <!-- /.form-group -->
-
-          <h3 class="control-sidebar-heading">Chat Settings</h3>
-
-          <div class="form-group">
-            <label class="control-sidebar-subheading">
-              Show me as online
-              <input type="checkbox" class="pull-right" checked>
-            </label>
-          </div>
-          <!-- /.form-group -->
-
-          <div class="form-group">
-            <label class="control-sidebar-subheading">
-              Turn off notifications
-              <input type="checkbox" class="pull-right">
-            </label>
-          </div>
-          <!-- /.form-group -->
-
-          <div class="form-group">
-            <label class="control-sidebar-subheading">
-              Delete chat history
-              <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
-            </label>
-          </div>
-          <!-- /.form-group -->
-        </form>
-      </div>
-      <!-- /.tab-pane -->
-    </div>
-  </aside>
 
   <!-- /.control-sidebar -->
   <!-- Add the sidebar's background. This div must be placed
        immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
 
+    <!-- jQuery 1.12.4 -->
+    {{--<script src="https://code.jquery.com/jquery-1.12.4.js"></script>--}}
+    {{--<script src="https://cdn.datatables.net/1.10.14/js/jquery.dataTables.min.js"></script>--}}
 <!-- jQuery 2.2.3 -->
 <script src="/bower_components/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
@@ -550,8 +362,72 @@
 <script src="/bower_components/AdminLTE/plugins/fastclick/fastclick.js"></script>
 <!-- AdminLTE App -->
 <script src="/bower_components/AdminLTE/dist/js/app.min.js"></script>
+<!-- ChartJS 1.0.1 -->
+<script src="/bower_components/AdminLTE/plugins/chartjs/Chart.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="/bower_components/AdminLTE/dist/js/demo.js"></script>
+<!-- DataTables -->
+<script src="/bower_components/AdminLTE/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="/bower_components/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js"></script>
+    <!--EXPORT PRINT BUTTON-->
+    <script src="/js/buttons.html5.min.js"></script>
+    <script src="/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
+    <script src="/js/jszip.min.js"></script>
+    <script src="/js/pdfmake.min.js"></script>
+<!-- SlimScroll -->
+<script src="/bower_components/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+
+<!-- page script -->
+<script>
+    $(function () {
+        $("#example3").DataTable({
+            "pageLength": 15,
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+            });
+        $("#example1").DataTable({
+            dom: 'Bfrtip',
+            "pageLength": 15,
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+       });
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "pageLength": 15,
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+
+//            buttons: [
+//                { extend: 'create', editor: editor },
+//                { extend: 'edit',   editor: editor },
+//                { extend: 'remove', editor: editor },
+//                {
+//                    extend: 'collection',
+//                    text: 'Export',
+//                    buttons: [
+//                        'copy',
+//                        'excel',
+//                        'csv',
+//                        'pdf',
+//                        'print'
+//                    ]
+//                }
+//            ]
+        });
+    });
+</script>
+
 </body>
 @endsection
 </html>

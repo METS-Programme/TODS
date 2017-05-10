@@ -32,9 +32,9 @@ class ToolsCRUDController extends Controller
         }
 
 
-        $tools=Tool::orderBy('tools_id', 'DESC')->paginate(5);
-        return view('layouts.tool registration.registered_tools', compact('tools', 'serviceareafortool', 'packagefortool', 'servicea'))
-            ->with('i',($request->input('page',1) -1) * 5);
+        $tools=Tool::orderBy('stock_status', 'DESC')->get();
+        return view('layouts.tool registration.registered_tools', compact('tools', 'serviceareafortool', 'packagefortool', 'servicea'));
+//            ->with('i',($request->input('page',1) -1) * 5);
     }
 
     /**

@@ -46,14 +46,12 @@
                                     <button class="btn btn-primary">Import Excel or CSV File <span class="glyphicon glyphicon-import"></span></button>
                                 </form>
                                 <br/>
-
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
 
         {{--List Registered Implementing partners--}}
         <div class="box">
@@ -76,16 +74,18 @@
                     <thead>
                     <tr>
                         <th style="width: 10px">#</th>
+                        <th>Facility Level</th>
+                        <th>Tool</th>
                         <th>Qty Allocated</th>
-                        <th>Date Generated</th>
-                        <th>Date</th>
+                        <th>Date Allocated</th>
+                        <th>Status</th>
                         <th>Operations</th>
                     </tr>
                     </thead>
                     <tbody>
                     @php($i = 1)
+
                     @foreach($toolsAllocation as $Allocation)
-                        <tr>
                             <td>{{$i}}</td>
                            {{-- <td>
                                 @foreach($ips as $ip)
@@ -94,9 +94,18 @@
                                     @endif
                                 @endforeach
                             </td>--}}
+                            @if($Allocation->health_facility_level_id == 2)<td>{{'HCII'}}</td>
+                            @elseif($Allocation->health_facility_level_id == 3)<td>{{'HCIII'}}</td>
+                            @elseif($Allocation->health_facility_level_id == 4)<td>{{'HCIV'}}</td>
+                            @elseif($Allocation->health_facility_level_id == 5)<td>{{'HOSPITAL'}}</td>
+                            @endif
+                            <td>{{$Allocation->tool_id}}</td>
                             <td>{{$Allocation->quantity}}</td>
-                            <td>{{$Allocation->date_generated}}</td>
-                            <td>{{date_format($Allocation->created_at, 'j/M/Y')}}</td>
+                            <td>{{$Allocation->date_allocated}}</td>
+                            @if($Allocation->status==0)<td>{{'New'}}</td>
+                            @else<td>{{'Re-Allocation'}}</td>
+                            @endif
+                            {{--<td>{{date_format($Allocation->created_at_in_db, 'j/M/Y')}}</td>--}}
                             <td colspan="2">
                                 <button type="button" class="btn btn-primary btn-sm" data-toggle=""
                                         data-backdrop="static" data-target="#">
