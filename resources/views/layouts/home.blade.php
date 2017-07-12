@@ -29,7 +29,11 @@
 
               <div class="info-box-content">
                   <a href="/printorderCRUD"><span class="info-box-text">ORDERED FOR PRINTING</span></a>
-                  <span class="info-box-number">{{number_format($printOrders->total_tools_ordered)}} <small>tools</small></span>
+                  @if(isset($printOrders->total_tools_ordered))
+                      <span class="info-box-number">{{number_format($printOrders->total_tools_ordered)}} <small>tools</small></span>
+                  @else
+                      <span class="info-box-number">0 <small>tools</small></span>
+                  @endif
               </div>
             <!-- /.info-box-content -->
           </div>
@@ -42,7 +46,11 @@
 
               <div class="info-box-content">
                   <a href="/deliveryCRUD"><span class="info-box-text">Total Deliveries</span></a>
-                  <span class="info-box-number">{{number_format($deliveries->total_tools_delivered)}} <small>tools</small></span>
+                  @if(isset($deliveries->total_tools_delivered))
+                    <span class="info-box-number">{{number_format($deliveries->total_tools_delivered)}} <small>tools</small></span>
+                      @else
+                      <span class="info-box-number">0 <small>tools</small></span>
+                  @endif
               </div>
             <!-- /.info-box-content -->
           </div>
