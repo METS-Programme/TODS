@@ -63,7 +63,7 @@
                   <span class="info-box-icon bg-red"><i class="glyphicon glyphicon-warning-sign small"></i></span>
 
                   <div class="info-box-content">
-                      <a href="/tools"><span class="info-box-text">Critical Tool</span></a>
+                      <a href="/tools"><span class="info-box-text">Critical Tools</span></a>
                       {{--<span class="info-box-number">10<small>%</small></span>--}}
                       {{--@foreach ($criticalStock as $critical)--}}
                       {{--@endforeach--}}
