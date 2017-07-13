@@ -10,7 +10,7 @@
     <div class="users-table">
         {{--{{$users}}--}}
        <div class="add-button" style="margin-bottom: 10px">
-           <a href="{{url('/people/create')}}" class="btn btn-primary">
+           <a href="{{ url('/register') }}" class="btn btn-primary">
             <span class="glyphicon glyphicon-user"></span> Add User
            </a>
        </div>

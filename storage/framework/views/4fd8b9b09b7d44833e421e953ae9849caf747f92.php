@@ -44,14 +44,12 @@
                                     <button class="btn btn-primary">Import Excel or CSV File <span class="glyphicon glyphicon-import"></span></button>
                                 </form>
                                 <br/>
-
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
 
         <?php /*List Registered Implementing partners*/ ?>
         <div class="box">
@@ -74,16 +72,18 @@
                     <thead>
                     <tr>
                         <th style="width: 10px">#</th>
+                        <th>Facility Level</th>
+                        <th>Tool</th>
                         <th>Qty Allocated</th>
-                        <th>Date Generated</th>
-                        <th>Date</th>
+                        <th>Date Allocated</th>
+                        <th>Status</th>
                         <th>Operations</th>
                     </tr>
                     </thead>
                     <tbody>
                     <?php ($i = 1); ?>
+
                     <?php foreach($toolsAllocation as $Allocation): ?>
-                        <tr>
                             <td><?php echo e($i); ?></td>
                            <?php /* <td>
                                 <?php foreach($ips as $ip): ?>
@@ -93,9 +93,18 @@
                                     <?php endif; ?>
                                 <?php endforeach; ?>
                             </td>*/ ?>
+                            <?php if($Allocation->health_facility_level_id == 2): ?><td><?php echo e('HCII'); ?></td>
+                            <?php elseif($Allocation->health_facility_level_id == 3): ?><td><?php echo e('HCIII'); ?></td>
+                            <?php elseif($Allocation->health_facility_level_id == 4): ?><td><?php echo e('HCIV'); ?></td>
+                            <?php elseif($Allocation->health_facility_level_id == 5): ?><td><?php echo e('HOSPITAL'); ?></td>
+                            <?php endif; ?>
+                            <td><?php echo e($Allocation->tool_id); ?></td>
                             <td><?php echo e($Allocation->quantity); ?></td>
-                            <td><?php echo e($Allocation->date_generated); ?></td>
-                            <td><?php echo e(date_format($Allocation->created_at, 'j/M/Y')); ?></td>
+                            <td><?php echo e($Allocation->date_allocated); ?></td>
+                            <?php if($Allocation->status==0): ?><td><?php echo e('New'); ?></td>
+                            <?php else: ?><td><?php echo e('Re-Allocation'); ?></td>
+                            <?php endif; ?>
+                            <?php /*<td><?php echo e(date_format($Allocation->created_at_in_db, 'j/M/Y')); ?></td>*/ ?>
                             <td colspan="2">
                                 <button type="button" class="btn btn-primary btn-sm" data-toggle=""
                                         data-backdrop="static" data-target="#">
