@@ -63,11 +63,15 @@
                   <span class="info-box-icon bg-red"><i class="glyphicon glyphicon-warning-sign small"></i></span>
 
                   <div class="info-box-content">
-                      <span class="info-box-text">Critical Tool</span>
+                      <a href="/tools"><span class="info-box-text">Critical Tool</span></a>
                       {{--<span class="info-box-number">10<small>%</small></span>--}}
-                      @foreach ($criticalStock as $critical)
-                          <span class="info-box-number">{{$critical->stock_status}} <small> ({{--{{$critical->code}}--}} {{$critical->name}})</small></span>
-                      @endforeach
+                      {{--@foreach ($criticalStock as $critical)--}}
+                      {{--@endforeach--}}
+                      @if(isset($criticalStock))
+                          <span class="info-box-number">{{$criticalStock}}<small> tools</small></span>
+                      @else
+                          <span class="info-box-number">0 <small>tools</small></span>
+                      @endif
                   </div>
                   <!-- /.info-box-content -->
               </div>
