@@ -34,7 +34,8 @@ class AvailableToolsController extends Controller
 
         $criticalStock = DB::table('tools')
             ->select('code','name','stock_status')
-            ->where('stock_status', '=', $minStock)->limit(1)->get(); //Get Critical item in stock
+            ->where('stock_status', '=', $minStock)
+            ->count('tools_id'); //Get Critical item in stock ->limit(1)->get();
 
 
         $deliveries = delivery::orderBy('delivery_id', 'desc')->first();//get total deliveries
