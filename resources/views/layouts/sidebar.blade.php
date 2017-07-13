@@ -33,10 +33,17 @@
             <!-- Optionally, you can add icons to the links -->
             <li class="active"><a href="/"><i class="fa fa-dashboard"></i> <span>HOME</span></a></li>
             <li class="treeview">
-                <a href="#"> <i class="fa fa-edit"></i> <span>ORDERS</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <a href="#"> <i class="fa fa-edit"></i> <span>METS ORDERS</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="{{url('printorderCRUD')}}"><i class="fa fa-circle-o text-red"></i><span>Print Orders</span></a></li>
                     <li><a href="{{url('deliveryCRUD')}}"><i class="fa fa-circle-o text-yellow"></i><span>Deliveries</span></a></li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#"> <i class="fa fa-edit"></i> <span>IP ORDERS</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <ul class="treeview-menu">
+                    <li><a href="{{url('printorderCRUD')}}"><i class="fa fa-circle-o text-red"></i><span>Tool Ordering</span></a></li>
+                    <li><a href="{{url('deliveryCRUD')}}"><i class="fa fa-circle-o text-yellow"></i><span>Tool Pick-ups</span></a></li>
                 </ul>
             </li>
             <li class="treeview">
@@ -68,7 +75,7 @@
             </li>
             <li> <a href="people"><i class="fa fa-user"></i> <span>Users</span></a></li>
             <li> <a href="#"><i class="fa fa-envelope"></i> <span>Contact Us</span></a></li>
-            <li> <a href="http://localhost:8000/bower_components/AdminLTE/index2.html"><i class="fa "></i> <span>Admin LTE</span></a></li>
+            {{--<li> <a href="http://localhost:8000/bower_components/AdminLTE/index2.html"><i class="fa "></i> <span>Admin LTE</span></a></li>--}}
 
         </ul><!-- /.sidebar-menu -->
     </section>

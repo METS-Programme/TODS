@@ -29,15 +29,27 @@ class AvailableToolsController extends Controller
         $totalStock = DB::table('tools')->select('tools_id','stock_status')
             ->where('stock_status', '>=', 10)
             ->count('tools_id');
+
         $minStock = DB::table('tools')->min('stock_status');//Get Min Stock
+
         $criticalStock = DB::table('tools')
             ->select('code','name','stock_status')
-            ->where('stock_status', '=', $minStock)->get(); //Get Critical item in stock
+            ->where('stock_status', '=', $minStock)->limit(1)->get(); //Get Critical item in stock
+
 
         $deliveries = delivery::orderBy('delivery_id', 'desc')->first();//get total deliveries
-        $printOrders = print_order::orderBy('printorder_id', 'DESC')->first();//get total tools ordered fro printing
+        $printOrders = print_order::orderBy('printorder_id', 'DESC')->first();//get total tools ordered from printing
 
         $stockStatus = Tool::orderBy('stock_status', 'ASC')->limit(5)->get();
+
+        /**
+         * Check if the following variables are not null
+         */
+        $totalStock = ($totalStock >= null) ? $totalStock : 0;
+        $criticalStock = (!isset($criticalStock)) ? ['code'=>0,'name'=>0,'stock_status'=>0]: $criticalStock;
+        $deliveries = ($deliveries >= null) ? $deliveries : 0;
+        $printOrders = ($printOrders >= null) ? $printOrders : 0;
+
 
         return view('layouts.home', compact('ips','totalStock','criticalStock', 'printOrders', 'deliveries', 'stockStatus'));
     }

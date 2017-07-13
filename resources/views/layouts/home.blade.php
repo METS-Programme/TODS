@@ -66,7 +66,7 @@
                       <span class="info-box-text">Critical Tool</span>
                       {{--<span class="info-box-number">10<small>%</small></span>--}}
                       @foreach ($criticalStock as $critical)
-                          <span class="info-box-number">{{$critical->stock_status}} <small> ({{$critical->code}} {{$critical->name}})</small></span>
+                          <span class="info-box-number">{{$critical->stock_status}} <small> ({{--{{$critical->code}}--}} {{$critical->name}})</small></span>
                       @endforeach
                   </div>
                   <!-- /.info-box-content -->

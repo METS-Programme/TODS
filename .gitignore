@@ -4,7 +4,19 @@ public/storage
 Homestead.yaml
 Homestead.json
 .env
-config/database.php
+config/data base.php
 .idea
 storage/*
 bootstrap/cache/*
+bower_components
+css
+images
+js
+.htaccess
+index.php
+robots.txt
+web.config
+config/database.php
+database/todsDB3.sql
+
+

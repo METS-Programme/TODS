@@ -1,10 +1,12 @@
 @extends('layouts.master')
 @section('content')
+    <!--Display Alerts (Errors and Success)-->
+    @include('errors.list')
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="tools">
                 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#newTool">
-                    Register new tool
+                     Register new tool
                     <span class="glyphicon glyphicon-plus"></span>
                 </button>
             </div>
@@ -25,7 +27,6 @@
                     <div class="col-md-3"><strong>Tool Name:</strong></div>
                     <div class="col-md-9">{!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}</div>
                 </div>
-
 
 
                 <div class="form-group row">
@@ -64,11 +65,6 @@
         </div><!-- /.modal-dialog -->
     </div>
     <!--place new order ends -->
-    @if ($message = Session::get('success'))
-        <div class="alert alert-success">
-            <p>{{ $message }}</p>
-        </div>
-    @endif
     <div class="box">
         <div class="box-header">
             <h3 class="box-title">Registered Tools</h3>

@@ -69,21 +69,21 @@
                     </thead>
                     <tbody>
                     <?php ($i = 1); ?>
-                    <?php foreach($ips as $ip): ?>
+                    <?php foreach($ipz as $ip): ?>
                         <tr>
                             <td><?php echo e($i); ?></td>
                             <td>
-                                <a class="user-block" href="<?php echo e(route('ips.show',$ip['ip_id'])); ?>">
-                                    <img class="img-circle img-bordered-sm" src="<?php echo e('/images/'.$ip['image']); ?>" alt="">
-                                    <span class="username"><?php echo e($ip['name']); ?></span>
+                                <a class="user-block" href="<?php echo e(route('ips.show',$ip->ip_id)); ?>">
+                                    <img class="img-circle img-bordered-sm" src="<?php echo e('/images/'.$ip->image); ?>" alt="">
+                                    <span class="username"><?php echo e($ip->name); ?></span>
                             </a>
                             </td>
-                        <td><?php echo e($ip['comprehensive_partner']); ?></td>
+                        <td><?php echo e($ip->comprehensive_partner); ?></td>
                             <td>
-                                <?php echo e($ip['funding_agency']['short_name']); ?>
+                                <?php echo e($ip->faName); ?>
 
                             </td>
-                            <td><?php echo e($ip['created_at']); ?></td>
+                            <td><?php echo e($ip->ipCreatedDate); ?></td>
                             <td colspan="2">
                                 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
                                         data-backdrop="static" data-target="#myModal">
@@ -94,7 +94,7 @@
                                     <span class="glyphicon glyphicon-trash"></span>
                                 </a>
                                 <?php /*<?php echo e(route('deliveryCRUD.show',$delivery->delivery_id)); ?>*/ ?>
-                                <a href="<?php echo e(route('ips.show',$ip['ip_id'])); ?>" class="btn btn-default btn-sm">View Details
+                                <a href="<?php echo e(route('ips.show',$ip->ip_id)); ?>" class="btn btn-default btn-sm">View Details
                                     <span class="glyphicon glyphicon-eye-open"></span>
                                 </a>
                             </td>

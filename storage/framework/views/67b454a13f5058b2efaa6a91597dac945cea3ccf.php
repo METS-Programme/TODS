@@ -7,7 +7,7 @@
     <div class="users-table">
         <?php /*<?php echo e($users); ?>*/ ?>
        <div class="add-button" style="margin-bottom: 10px">
-           <a href="<?php echo e(url('/people/create')); ?>" class="btn btn-primary">
+           <a href="<?php echo e(url('/register')); ?>" class="btn btn-primary">
             <span class="glyphicon glyphicon-user"></span> Add User
            </a>
        </div>

@@ -40,7 +40,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="<?php echo e(url('/login')); ?>">
-                    TOD-System
+                    Tools Ordering & Distribution System (TODS)
                 </a>
             </div>
 
@@ -55,7 +55,7 @@
                     <!-- Authentication Links -->
                     <?php if(Auth::guest()): ?>
                         <li><a href="<?php echo e(url('/login')); ?>">Login</a></li>
-                        <li><a href="<?php echo e(url('/register')); ?>">Register</a></li>
+                        <?php /*<li><a href="<?php echo e(url('/register')); ?>">Register</a></li>*/ ?>
                     <?php else: ?>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
