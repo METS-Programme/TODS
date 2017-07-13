@@ -65,7 +65,7 @@
                       <span class="info-box-text">Critical Tool</span>
                       <?php /*<span class="info-box-number">10<small>%</small></span>*/ ?>
                       <?php foreach($criticalStock as $critical): ?>
-                          <span class="info-box-number"><?php echo e($critical->stock_status); ?> <small> (<?php echo e($critical->code); ?> <?php echo e($critical->name); ?>)</small></span>
+                          <span class="info-box-number"><?php echo e($critical->stock_status); ?> <small> (<?php /*<?php echo e($critical->code); ?>*/ ?> <?php echo e($critical->name); ?>)</small></span>
                       <?php endforeach; ?>
                   </div>
                   <!-- /.info-box-content -->

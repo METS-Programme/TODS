@@ -1,9 +1,11 @@
 <?php $__env->startSection('content'); ?>
+    <!--Display Alerts (Errors and Success)-->
+    <?php echo $__env->make('errors.list', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="tools">
                 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#newTool">
-                    Register new tool
+                     Register new tool
                     <span class="glyphicon glyphicon-plus"></span>
                 </button>
             </div>
@@ -25,7 +27,6 @@
                     <div class="col-md-3"><strong>Tool Name:</strong></div>
                     <div class="col-md-9"><?php echo Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')); ?></div>
                 </div>
-
 
 
                 <div class="form-group row">
@@ -66,11 +67,6 @@
         </div><!-- /.modal-dialog -->
     </div>
     <!--place new order ends -->
-    <?php if($message = Session::get('success')): ?>
-        <div class="alert alert-success">
-            <p><?php echo e($message); ?></p>
-        </div>
-    <?php endif; ?>
     <div class="box">
         <div class="box-header">
             <h3 class="box-title">Registered Tools</h3>

@@ -57,9 +57,9 @@ class ToolsCRUDController extends Controller
     {
         $this->validate($request, [
             'name'=> 'required',
-            'code' => 'required',
-            'specification' => 'required',
-            'description' => 'required',
+//            'code' => 'required',
+//            'specification' => 'required',
+//            'description' => 'required',
         ]);
 
         Tool::create($request->all());
@@ -110,15 +110,15 @@ class ToolsCRUDController extends Controller
         $tool->save();
 
         $this->validate($request, [
-            'name'=> 'required',
-            'code' => 'required',
-            'specification' => 'required',
-            'service_area' => 'required',
-            'description' => 'required'
+            'name'=> 'required'
+//            'code' => 'required',
+//            'specification' => 'required',
+//            'service_area' => 'required',
+//            'description' => 'required'
         ]);
         Tool::find($tools_id)->update($request->all());
         return redirect()->route('tools.index')
-            ->with('success','Product updated successfully');
+            ->with('success','Tool updated successfully');
     }
 
     /**
@@ -132,7 +132,7 @@ class ToolsCRUDController extends Controller
         Tool::find($tools_id)->delete();
 
         return redirect()->route('tools.index')
-            ->with('success','Product deleted successfully');
+            ->with('success','Tool deleted successfully');
     }
 
 
