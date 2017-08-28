@@ -23,7 +23,7 @@
                 <td>{{$allocate[]['tool_id']}}</td>
                 <td></td>
                 <td>{{$allocate[]['health_facility_level_id']}}</td>
-                <td>{{$allocate[]['quantity']}}</td>
+                <td>{{ $allocate[]['quantity'] }}</td>
                 <td>{{$allocate[]['allocated_by']}}</td>
                 <td>{{$allocate[]['status']}}</td>
             </tr>

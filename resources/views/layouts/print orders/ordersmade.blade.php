@@ -1,5 +1,7 @@
 @extends('layouts.master')
 @section('content')
+    <!--Display Alerts (Errors and Success)-->
+    @include('errors.list')
     <div class="row">
         <div class="col-lg-12 margin-tb">
             {{--<div class="orders-table">--}}
@@ -64,6 +66,8 @@
                     </thead>
                     <tbody>
                     @php($i = 1)
+                    {{--@php($tools_id = array() )--}}
+                    {{--@php($quantity_ordered = array() )--}}
                     @foreach($toolname as $key=>$tool)
                         <tr class="row">
                             <td class="col-md-1">{{$i}}</td>

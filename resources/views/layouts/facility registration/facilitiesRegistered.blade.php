@@ -30,6 +30,8 @@
     Health Facilities
 @endsection
 @section('content')
+    <!--Display Alerts (Errors and Success)-->
+    @include('errors.list')
     <div class="row">
         <div class="col-lg-12 margin-tb">
 
@@ -94,8 +96,8 @@
             <h3 class="box-title">Registered Health Facilities</h3>
         </div>
         <div class="box-body no-padding">
-    <table class="table table-striped table-bordered">
-        <tr >
+    <table id="paginating" class="table table-striped table-bordered">
+        <thead>
             <th>Id</th>
             <th>Name</th>
             <th>Code</th>
@@ -103,7 +105,8 @@
             <th>Implementing Partner</th>
             <th>Subcounty</th>
             <th width="280px">Action</th>
-        </tr>
+        </thead>
+        <tbody>
         @php($i = 1)
         @foreach ($facilities as $healthfacility)
             <tr>
@@ -231,16 +234,6 @@
 
 
                     <!--edit tool ends-->
-                <script>
-                    function ConfirmDelete()
-                    {
-                        var x = confirm("Are you sure you want to delete?");
-                        if (x)
-                            return true;
-                        else
-                            return false;
-                    }
-                </script>
 
                     <!-- delete tool begins -->
                     {!! Form::open(['method' => 'DELETE','route' => ['facility.destroy', $healthfacility->healthfacility_id], 'onsubmit' => 'return ConfirmDelete()', 'style'=>'display:inline']) !!}
@@ -249,12 +242,13 @@
 
                 </td>
             </tr>
+        </tbody>
           @php($i++)
         @endforeach
     </table>
         </div>
     </div>
-</html>
+
     <!-- jQuery 2.2.3 -->
     <script src="/bower_components/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
     <!-- Bootstrap 3.3.6 -->
@@ -270,6 +264,50 @@
     <script src="/bower_components/AdminLTE/dist/js/app.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="/bower_components/AdminLTE/dist/js/demo.js"></script>
+    <script src="/js/deleteConfirmation.js"></script> {{--Confirm before deleting a DB record--}}
+
+    <!--EXPORT PRINT BUTTON-->
+    {{--<script src="/js/buttons.html5.min.js"></script>--}}
+    {{--<script src="/js/buttons.print.min.js"></script>--}}
+    {{--<script src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>--}}
+    {{--<script src="/js/jszip.min.js"></script>--}}
+    {{--<script src="/js/pdfmake.min.js"></script>--}}
+
+    <!-- page script -->
+    <script>
+        $(function () {
+//            $("#example3").DataTable({
+//                "pageLength": 15,
+//                dom: 'Bfrtip',
+//                buttons: [
+//                    'copy', 'csv', 'excel', 'pdf', 'print'
+//                ]
+//            });
+//            $("#example1").DataTable({
+//                dom: 'Bfrtip',
+//                "pageLength": 15,
+//                buttons: [
+//                    'copy', 'csv', 'excel', 'pdf', 'print'
+//                ]
+//            });
+            $('#paginating').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": true,
+                "ordering": false,
+                "info": true,
+                "autoWidth": false,
+                "pageLength": 25,
+                dom: 'Bfrtip',
+//                buttons: [
+//                    'copy', 'csv', 'excel', 'pdf', 'print'
+//                ]
+
+            });
+        });
+    </script>
+</html>
+
 
 
 @endsection

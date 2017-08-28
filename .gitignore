@@ -1,4 +1,4 @@
-vendor
+vendor/*
 node_modules
 public/storage
 Homestead.yaml
@@ -9,9 +9,7 @@ config/data base.php
 storage/*
 bootstrap/cache/*
 bower_components
-css
 images
-js
 .htaccess
 index.php
 robots.txt

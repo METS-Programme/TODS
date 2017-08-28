@@ -49,7 +49,7 @@
                     <tr>
                         <td class="col-sm-1">{{$i}}</td>
                         <td colspan="2">{{ $details->name}}</td>
-                        <td colspan="2">{{ $details->quantity}}</td>
+                        <td colspan="2">{{ number_format($details->quantity) }}</td>
                     </tr>
                     @php($i++)
                 @endforeach

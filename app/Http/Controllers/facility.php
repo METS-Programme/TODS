@@ -7,6 +7,7 @@ use App\implementing_partner;
 use App\SubCounty;
 use Illuminate\Http\Request;
 
+
 use App\Http\Requests;
 
 class facility extends Controller
@@ -39,9 +40,11 @@ class facility extends Controller
             $level[] = FacilityLevel::find($facilitylevel->facilitylevel_id);
         }
 
-        $facilities=\App\Facility::orderBy('healthfacility_id', 'DESC')->paginate(20);
-        return view('layouts.facility registration.facilitiesRegistered', compact('facilities', 'implementingpartnerforfacility', 'subcountyforfacility', 'levelforfacility'))
-            ->with('i',($request->input('page',1) -1) * 20);
+        $facilities = \App\Facility::orderBy('healthfacility_id', 'ASC')->paginate(50);
+//        $facilities = \App\Facility::all();
+
+        return view('layouts.facility registration.facilitiesRegistered', compact('facilities', 'implementingpartnerforfacility', 'subcountyforfacility', 'levelforfacility'));
+           // ->with('i',($request->input('page',1) -1) * 20);
     }
 
     /**
@@ -76,8 +79,8 @@ class facility extends Controller
         $input['health_facility_id'] = $healthfacility_id;
         \App\h_facility_implementing_partner::create($input); //Update the HFC-IP Mapping table
 
-        return redirect()->route('facility.index')
-            ->with('success', 'Facility registered successfully');
+        return redirect()->route('facility.index');
+//            ->with('success', 'Facility registered successfully');
     }
 
     /**
