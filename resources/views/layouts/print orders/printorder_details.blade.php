@@ -63,7 +63,7 @@
                         <tr>
                         <td>{{$i}}</td>
                         <td colspan="2">{{ $details->name}}</td>
-                        <td colspan="2">{{ $details->quantity_ordered}}</td>
+                        <td colspan="2">{{ number_format($details->quantity_ordered) }}</td>
                         </tr>
                         @php($i++)
                     @endforeach

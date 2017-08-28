@@ -110,7 +110,7 @@
                     <div class="row">
                         <div class="col-lg-12 margin-tb">
                             <div class="pull-left">
-                                <h2> Show Tool details</h2>
+                                <h2>Show Tool details</h2>
                             </div>
                             <div class="pull-right">
                                 <a class="btn btn-primary" href="{{ route('tools.index') }}"> Back</a>
@@ -218,7 +218,7 @@
                     <!--edit tool ends-->
 
                     <!-- delete tool begins -->
-                 {!! Form::open(['method' => 'DELETE','route' => ['tools.destroy', $tool->tools_id],'style'=>'display:inline']) !!}
+                 {!! Form::open(['method' => 'DELETE','route' => ['tools.destroy', $tool->tools_id], 'id' => 'FormDeleteRecord','style'=>'display:inline', 'onsubmit' => 'return ConfirmDelete()']) !!}
                     {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
                     {!! Form::close() !!}
 
@@ -245,6 +245,7 @@
     <script src="/bower_components/AdminLTE/dist/js/app.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="/bower_components/AdminLTE/dist/js/demo.js"></script>
+    <script src="/js/deleteConfirmation.js"></script> {{--Confirm before deleting a DB record--}}
 
 
 @endsection

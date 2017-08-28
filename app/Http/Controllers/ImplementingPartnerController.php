@@ -53,7 +53,6 @@ class ImplementingPartnerController extends Controller
     //public function store(Requests\createIpRequest $request){ //If you use a request class for validation
     public function store(Request $request)
     {
-
         //Validation within the controller
         $this->validate($request,
             ['name' => 'required|min:2',

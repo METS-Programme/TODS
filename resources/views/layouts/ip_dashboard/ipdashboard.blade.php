@@ -202,7 +202,7 @@
                             <td>{{$arr['toolName']}}</td>
                             <td>{{$arr['facilityName']}}</td>
                             <td>{{$arr['facilityLevel']}}</td>
-                            <td>{{$arr['quantity']}}</td>
+                            <td>{{ round($arr['quantity']) }}</td>
                           </tr>
                         @php($i++)
                       @endforeach
@@ -317,7 +317,7 @@
                         <tr>
                           <td>{{$i}}</td>
                           <td>{{$toolName}}</td>
-                          <td>{{$value}}</td>
+                          <td>{{ round($value) }}</td>
                           <td></td>
                           <td></td>
                           <td></td>
@@ -398,7 +398,7 @@
         $('#example2').DataTable({
             "paging": true,
             "lengthChange": false,
-            "searching": false,
+            "searching": true,
             "ordering": true,
             "info": true,
             "autoWidth": false,
