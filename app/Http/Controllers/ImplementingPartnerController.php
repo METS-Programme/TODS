@@ -107,9 +107,11 @@ class ImplementingPartnerController extends Controller
             $facilityID = $facility['healthfacility_id'];
             $allocation[] = DB::table('allocation')->distinct()->select('allocation.date_allocated', 'allocation.tool_id as toolId',
                 'allocation.health_facility_level_id as levelId', 'allocation.quantity', 'allocation.allocated_by',
-                'tools.name as toolName', 'facility_level.name as facilityLevel', 'health_facility.name as facilityName')
+                'tools.name as toolName', 'packaging.package_name as packageName', 'packaging.quantity as packageQuantity',
+                'facility_level.name as facilityLevel', 'health_facility.name as facilityName')
                 ->join('health_facility','health_facility.facilitylevel_id','=','allocation.health_facility_level_id')
                 ->join('tools', 'tools.tools_id', '=', 'allocation.tool_id')
+                ->join('packaging', 'packaging.package_id', '=', 'tools.package_id')
                 ->join('facility_level', 'facility_level.facilitylevel_id', '=', 'allocation.health_facility_level_id')
                 ->where(['allocation.health_facility_level_id' => $facilityLevelId, 'health_facility.healthfacility_id'=>$facilityID] )
 //                ->groupBy('allocation.health_facility_level_id')
@@ -134,12 +136,12 @@ class ImplementingPartnerController extends Controller
         $allocated_id = array();
         $all_allocation = array();
         foreach ($array as $tool_allocated){
-            if(in_array($tool_allocated['toolId']."|".$tool_allocated['toolName'], $allocated_id)){
-                $total_allocated = $all_allocation[$tool_allocated['toolId']."|".$tool_allocated['toolName']]+ $tool_allocated['quantity'];
-                $all_allocation[$tool_allocated['toolId']."|".$tool_allocated['toolName']] = $total_allocated;
+            if(in_array($tool_allocated['toolId']."|".$tool_allocated['toolName']."|".$tool_allocated['packageQuantity']."|".$tool_allocated['packageName'], $allocated_id)){
+                $total_allocated = $all_allocation[$tool_allocated['toolId']."|".$tool_allocated['toolName']."|".$tool_allocated['packageQuantity']."|".$tool_allocated['packageName']]+ $tool_allocated['quantity'];
+                $all_allocation[$tool_allocated['toolId']."|".$tool_allocated['toolName']."|".$tool_allocated['packageQuantity']."|".$tool_allocated['packageName']] = $total_allocated;
             }else{
-                $all_allocation[$tool_allocated['toolId']."|".$tool_allocated['toolName']] = $tool_allocated['quantity'];
-                array_push($allocated_id, $tool_allocated['toolId']."|".$tool_allocated['toolName']);
+                $all_allocation[$tool_allocated['toolId']."|".$tool_allocated['toolName']."|".$tool_allocated['packageQuantity']."|".$tool_allocated['packageName']] = $tool_allocated['quantity'];
+                array_push($allocated_id, $tool_allocated['toolId']."|".$tool_allocated['toolName']."|".$tool_allocated['packageQuantity']."|".$tool_allocated['packageName']);
             }
         }
 

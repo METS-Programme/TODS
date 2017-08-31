@@ -313,14 +313,28 @@
                       @php($i=1)
                       @foreach($all_allocation as $key=>$value)
                         @php($toolName = explode("|",$key)[1])
+                        @php($packageName_size = explode("|",$key)[3])
+                        @php($packageName = explode("-",$packageName_size)[0])
+                        @php($quantityAllocated = round($value))
+                        @php($packageSize = explode("|",$key)[2])
+                        @if($packageSize!=0)
+                         @php($packs = $quantityAllocated / $packageSize ) <!--Calculate the Packs-->
+                          @php( $packsTruncated = floor($packs))
+                          @php($pieces = ( ($packs - $packsTruncated) * $packageSize) ) <!--Calculate the Pieces-->
+                          @else
+                          @php($packs = 0)
+                          @php($pieces = 0)
+                        @endif
+
+
 
                         <tr>
                           <td>{{$i}}</td>
                           <td>{{$toolName}}</td>
-                          <td>{{ round($value) }}</td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
+                          <td>{{$quantityAllocated}}</td>
+                          <td>{{$packageSize}}</td>
+                          <td>{{$packsTruncated." ".$packageName}}</td>
+                          <td>{{$pieces}}</td>
                         </tr>
                         @php($i++)
                       @endforeach
