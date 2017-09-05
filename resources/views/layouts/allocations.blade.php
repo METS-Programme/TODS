@@ -58,60 +58,48 @@
             <div class="box-header">
                 <h3 class="box-title">Tools Allocations</h3>
 
-                <div class="box-tools">
-                    <ul class="pagination pagination-sm no-margin pull-right">
-                        <li><a href="#">&laquo;</a></li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">&raquo;</a></li>
-                    </ul>
-                </div>
+                {{--<div class="box-tools">--}}
+                    {{--<ul class="pagination pagination-sm no-margin pull-right">--}}
+                        {{--<li><a href="#">&laquo;</a></li>--}}
+                        {{--<li><a href="#">1</a></li>--}}
+                        {{--<li><a href="#">2</a></li>--}}
+                        {{--<li><a href="#">3</a></li>--}}
+                        {{--<li><a href="#">&raquo;</a></li>--}}
+                    {{--</ul>--}}
+                {{--</div>--}}
             </div>
             <!-- /.box-header -->
             <div class="box-body no-padding">
-                <table class="table table-bordered table-striped">
+                <table id="example2" class="table table-bordered table-striped">
                     <thead>
                     <tr>
                         <th style="width: 10px">#</th>
                         <th>Facility Level</th>
-                        <th>Tool</th>
+                        <th>Tool Name</th>
                         <th>Qty Allocated</th>
                         <th>Date Allocated</th>
                         <th>Status</th>
                         <th>Operations</th>
                     </tr>
                     </thead>
-                    <tbody>
                     @php($i = 1)
-
                     @foreach($toolsAllocation as $Allocation)
+                        <tr>
                             <td>{{$i}}</td>
-                           {{-- <td>
-                                @foreach($ips as $ip)
-                                    @if ($Allocation->ip_id == $ip->ip_id)
-                                       {{$ip->name}}
-                                    @endif
-                                @endforeach
-                            </td>--}}
-                            @if($Allocation->health_facility_level_id == 2)<td>{{'HCII'}}</td>
-                            @elseif($Allocation->health_facility_level_id == 3)<td>{{'HCIII'}}</td>
-                            @elseif($Allocation->health_facility_level_id == 4)<td>{{'HCIV'}}</td>
-                            @elseif($Allocation->health_facility_level_id == 5)<td>{{'HOSPITAL'}}</td>
-                            @endif
-                            <td>{{$Allocation->tool_id}}</td>
-                            <td>{{$Allocation->quantity}}</td>
-                            <td>{{$Allocation->date_allocated}}</td>
-                            @if($Allocation->status==0)<td>{{'New'}}</td>
-                            @else<td>{{'Re-Allocation'}}</td>
+                            <td>{{$Allocation->levelName}}</td>
+                            <td>{{$Allocation->toolCode."-".$Allocation->toolName}}</td>
+                            <td>{{round($Allocation->quantity)}}</td>
+                            <td>{{$Allocation->date}}</td>
+                            @if($Allocation->status==0)<td>{{'Approved'}}</td>
+                            @else<td>{{'Not-Approved'}}</td>
                             @endif
                             {{--<td>{{date_format($Allocation->created_at_in_db, 'j/M/Y')}}</td>--}}
-                            <td colspan="2">
-                                <button type="button" class="btn btn-primary btn-sm" data-toggle=""
-                                        data-backdrop="static" data-target="#">
-                                    Edit
-                                    <span class="glyphicon glyphicon-pencil"></span>
-                                </button>
+                            <td >
+                                {{--<button type="button" class="btn btn-primary btn-sm" data-toggle=""--}}
+                                        {{--data-backdrop="static" data-target="#">--}}
+                                    {{--Edit--}}
+                                    {{--<span class="glyphicon glyphicon-pencil"></span>--}}
+                                {{--</button>--}}
                                 <a href="#" class="btn btn-adn btn-sm">Delete
                                     <span class="glyphicon glyphicon-trash"></span>
                                 </a>
@@ -139,5 +127,28 @@
     <script src="/bower_components/AdminLTE/plugins/datatables/jquery.dataTables.min.js"></script>
 
     <script src="/bower_components/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js"></script>
+    <!--EXPORT PRINT BUTTON-->
+    <script src="/js/buttons.html5.min.js"></script>
+    <script src="/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
+    <script src="/js/jszip.min.js"></script>
+    <script src="/js/pdfmake.min.js"></script>
+    <script>
+        $(function () {
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "pageLength": 25,
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+    </script>
     </body>
 @endsection

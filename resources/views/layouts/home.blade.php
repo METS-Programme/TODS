@@ -48,9 +48,14 @@
                   <a href="/deliveryCRUD"><span class="info-box-text">Total Deliveries</span></a>
                   @if(isset($deliveries->total_tools_delivered))
                     <span class="info-box-number">{{number_format($deliveries->total_tools_delivered)}} <small>tools</small></span>
+                      <!--Get the Balance to be delivered-->
+                      @if(isset($printOrders->total_tools_ordered))
+                          <span class="" style="color: #a9a9a9">Bal: {{number_format($printOrders->total_tools_ordered- $deliveries->total_tools_delivered)}} <small>tools</small></span>
                       @else
                       <span class="info-box-number">0 <small>tools</small></span>
                   @endif
+                  @endif
+
               </div>
             <!-- /.info-box-content -->
           </div>

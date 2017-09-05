@@ -17,7 +17,7 @@
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="/bower_components/AdminLTE/dist/css/skins/_all-skins.min.css">
-  <link rel="stylesheet" href="/css/buttons.dataTables.min.css">
+  {{--<link rel="stylesheet" href="/css/buttons.dataTables.min.css">--}}
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -47,7 +47,7 @@
     <section class="content">
 
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-2">
 
           <!-- Profile Image -->
           <div class="box box-primary">
@@ -59,14 +59,15 @@
               <p class="text-muted text-center">Comprehensive Partner: {{$ips->comprehensive_partner}}</p>
 
               <ul class="list-group list-group-unbordered">
+                {{--<li class="list-group-item">--}}
+                  {{--<b>Regions</b> <a class="pull-right">{{$ips->regions}}</a>--}}
+                {{--</li>--}}
                 <li class="list-group-item">
-                  <b>Regions</b> <a class="pull-right">{{$ips->regions}}</a>
+                  {{--<b>Districts</b> <a class="pull-right">{{$ips->districts}}</a>--}}
+                  <b>Districts</b> <a class="pull-right">{{$totalDistrict}}</a>
                 </li>
                 <li class="list-group-item">
-                  <b>Districts</b> <a class="pull-right">{{$ips->districts}}</a>
-                </li>
-                <li class="list-group-item">
-                  <b>Health Facilities</b> <a class="pull-right">{{$totalFacilities}}</a>
+                  <b>Facilities</b> <a class="pull-right">{{$totalFacilities}}</a>
                 </li>
                 <li class="list-group-item">
                   @if($ips->funding_agency_id ==1) <b>Funded by</b> <a class="pull-right">CDC</a>
@@ -110,7 +111,7 @@
           <!-- /.box -->
         </div>
         <!-- /.col -->
-        <div class="col-md-9">
+        <div class="col-md-10">
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
               <li class="active"><a href="#facilities" data-toggle="tab">Facilities</a></li>
@@ -137,9 +138,10 @@
                           <th style="width: 10px">#</th>
                           <th>Name</th>
                           <th>Code</th>
-                          <th>Facility Level</th>
+                          <th>Level</th>
                           <th>Sub-county</th>
-                          <th>Status</th>
+                          <th>District</th>
+                          {{--<th>Status</th>--}}
 
                         </tr>
                         </thead>
@@ -152,9 +154,10 @@
                               <td>{{$facility->code}}</td>
                               <td>{{$facility->levelName}}</td>
                               <td>{{$facility->subcountyName}}</td>
-                              @if($i == 1 || $i == 3)<td><p class="alert-danger">No Tools Delivered</p></td>
-                              @else<td><p class="alert-success">Tools Delivered</p></td>
-                              @endif
+                              <td>{{$facility->districtName}}</td>
+                              {{--@if($i == 1 || $i == 3)<td><p class="alert-danger">No Tools Delivered</p></td>--}}
+                              {{--@else<td><p class="alert-success">Tools Delivered</p></td>--}}
+                              {{--@endif--}}
                             </tr>
                             @php($i++)
                         @endforeach
@@ -396,7 +399,7 @@
 <script>
     $(function () {
         $("#example3").DataTable({
-            "pageLength": 15,
+            "pageLength": 20,
             dom: 'Bfrtip',
             buttons: [
                 'copy', 'csv', 'excel', 'pdf', 'print'
@@ -404,7 +407,7 @@
             });
         $("#example1").DataTable({
             dom: 'Bfrtip',
-            "pageLength": 15,
+            "pageLength": 20,
             buttons: [
                 'copy', 'csv', 'excel', 'pdf', 'print'
             ]
@@ -416,7 +419,7 @@
             "ordering": true,
             "info": true,
             "autoWidth": false,
-            "pageLength": 15,
+            "pageLength": 20,
             dom: 'Bfrtip',
             buttons: [
                 'copy', 'csv', 'excel', 'pdf', 'print'

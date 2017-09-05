@@ -23,6 +23,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- DataTables -->
     <link rel="stylesheet" href="/bower_components/AdminLTE/plugins/datatables/dataTables.bootstrap.css">
     <link href="{{ asset("/bower_components/AdminLTE/dist/css/skins/skin-blue.min.css")}}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="/css/buttons.dataTables.min.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
