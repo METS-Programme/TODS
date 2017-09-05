@@ -85,9 +85,11 @@ class ImplementingPartnerController extends Controller
         //return all facilities supported by an IP
         $healthFacilities = DB::table('health_facility')->select('health_facility.healthfacility_id',
             'health_facility.name as facilityName', 'health_facility.code', 'facility_level.name as levelName',
-            'subcounty.name as subcountyName','health_facility.facilitylevel_id')
+            'subcounty.name as subcountyName','health_facility.facilitylevel_id', 'district.name as districtName',
+            'district.district_id as didtrictId')
             ->join('facility_level', 'facility_level.facilitylevel_id', '=', 'health_facility.facilitylevel_id')
             ->join('subcounty', 'subcounty.subcounty_id', '=', 'health_facility.subcounty_id')
+            ->join('district','district.district_id','=','subcounty.district_id')
             ->where(['health_facility.ip_id' => $ip_id])
 //            ->groupBy('health_facility.facilitylevel_id')
             ->get();
@@ -99,6 +101,15 @@ class ImplementingPartnerController extends Controller
             ->where('health_facility.ip_id', '=', $ip_id)
             ->groupBy('health_facility.facilitylevel_id')
             ->get();
+        //Count the Number of District supported by an IP
+        $noDistricts = DB::table('district')
+            ->select(DB::raw('count(*) as district_count', 'district_id'))
+            ->join('subcounty','subcounty.district_id', '=', 'district.district_id')
+            ->join('health_facility', 'subcounty.subcounty_id', '=', 'health_facility.subcounty_id' )
+            ->where('health_facility.ip_id', '=', $ip_id)
+            ->groupBy('district.district_id')
+            ->get();
+        $totalDistrict =count($noDistricts);
 
         //Show base allocation for IP on IP dashboard URL baseURL/ips/ip_id
         foreach ($facilities as $facility) {
@@ -166,7 +177,10 @@ class ImplementingPartnerController extends Controller
 
 
         return view('layouts.ip_dashboard.ipdashboard',
-            compact('ips', 'facilities', 'totalFacilities', 'allocation', 'healthFacilities', 'noFacilityLevel', 'array', 'all_allocation'));
+            compact('ips', 'facilities', 'totalFacilities', 'allocation',
+                     'healthFacilities', 'noFacilityLevel', 'array', 'all_allocation',
+                      'totalDistrict'
+                   ));
     }
 
     /**

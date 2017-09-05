@@ -36,10 +36,6 @@
             <li class="treeview">
                 <a href="#"> <i class="fa fa-edit"></i> <span>ADMIN MENU</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
-                    <li><a href="{{url('printorderCRUD')}}"><i class="fa fa-circle-o text-red"></i><span>Print Orders</span></a></li>
-                    <li><a href="{{url('deliveryCRUD')}}"><i class="fa fa-circle-o text-yellow"></i><span>Tool Deliveries</span></a></li>
-                    <li><a href="{{url('deliveryCRUD')}}"><i class="fa fa-circle-o text-yellow"></i><span>Tool Pick-ups</span></a></li>
-
                     <li class="treeview">
                         <a href="#"> <i class="fa fa-edit"></i> <span>MANAGE</span> <i class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">
@@ -53,6 +49,10 @@
                             <li> <a href="people"><i class="fa fa-user"></i> <span>Users</span></a></li>
                         </ul>
                     </li>
+
+                    <li><a href="{{url('printorderCRUD')}}"><i class="fa fa-circle-o text-red"></i><span>Print Orders</span></a></li>
+                    <li><a href="{{url('deliveryCRUD')}}"><i class="fa fa-circle-o text-yellow"></i><span>Tool Deliveries</span></a></li>
+                    <li><a href="{{url('deliveryCRUD')}}"><i class="fa fa-circle-o text-yellow"></i><span>Tool Pick-ups</span></a></li>
                 </ul>
             </li>
             <li class="treeview">

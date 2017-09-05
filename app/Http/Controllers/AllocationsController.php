@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\FacilityLevel;
 use App\Item;
 use Excel;
+use DB;
 
 use App\Http\Requests;
 
@@ -22,14 +23,24 @@ class AllocationsController extends Controller
     //Display Available IPs
     public function index()
     {
-        $toolsAllocation = allocation::all();
+        //$toolsAllocation = allocation::all();
         //$level = facilityLevel::pluck();
+
+        $toolsAllocation = DB::table('allocation')->select('allocation.allocation_id as allocationId',
+            'allocation.baseallocation_id as bAllocationID', 'allocation.print_order_delivary_id as delivaryID',
+            'facility_level.name as levelName','tools.code as toolCode','tools.name as toolName',
+            'allocation.quantity as quantity','allocation.date_allocated as date','allocation.status as status')
+            ->join('facility_level', 'facility_level.facilitylevel_id', '=', 'allocation.health_facility_level_id')
+            ->join('tools', 'tools.tools_id', '=', 'allocation.tool_id')
+//            ->where(['health_facility.ip_id' => $ip_id])
+//            ->groupBy('allocation.tool_id')
+            ->get();
 
 //        foreach ($toolsAllocation as $toolA){
 //            $ips[] = implementing_partner::find($toolA->ip_id);
 //        }
 
-        return view('layouts.allocations', compact('toolsAllocation', 'level'));
+        return view('layouts.allocations', compact('toolsAllocation'));
     }
 
     public function showTools()
